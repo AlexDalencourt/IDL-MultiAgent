@@ -1,6 +1,6 @@
-package tp2.sma;
+package tp2.particules.sma;
 
-import tp2.model.ConstantParams;
+import tp2.ConstantParams;
 
 public class SMARandom extends SMA {
 	

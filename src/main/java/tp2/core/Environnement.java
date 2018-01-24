@@ -1,7 +1,8 @@
-package tp2.model;
+package tp2.core;
 
 import java.util.Observable;
 
+import tp2.ConstantParams;
 import tp2.Logger;
 
 public class Environnement extends Observable {
@@ -26,20 +27,14 @@ public class Environnement extends Observable {
 
 	public boolean isEmptyCellule(int x, int y) {
 		if (torus) {
-			if(x < 0) {
-				x = ConstantParams.getGridSizeX() - 1;
-			}
-			if(y < 0) {
-				y = ConstantParams.getGridSizeY() - 1;
-			}
-			if(x >= ConstantParams.getGridSizeX()) {
-				x = 0;
-			}
-			if(y >= ConstantParams.getGridSizeY()) {
-				y = 0;
-			}
+			x = calculateTorus(x, ConstantParams.getGridSizeX());
+			y = calculateTorus(y, ConstantParams.getGridSizeY());
 		}
 		return null == environnement[x][y];
+	}
+
+	public int calculateTorus(int pos, int size) {
+		return (pos + size) % size;
 	}
 
 	public boolean checkOutOfBorders(int x, int y) {
@@ -47,7 +42,7 @@ public class Environnement extends Observable {
 	}
 	
 	public void applyTransition(Agent agent) {
-		Logger.log(String.format("Apply transition agent %s : [%s,%s] -> [%s,%s]", agent.getId(),agent.getPosX(),agent.getNewPosY(),agent.getNewPosX(),agent.getNewPosY()));
+		Logger.log(String.format("Apply transition agent %s : [%s,%s] -> [%s,%s]", agent.getId(),agent.getPosX(),agent.getPosY(),agent.getNewPosX(),agent.getNewPosY()));
 		
 		environnement[agent.getPosX()][agent.getPosY()] = null;
 		agent.update();
@@ -59,7 +54,7 @@ public class Environnement extends Observable {
 	
 	public void tickUpdate() {
 		this.localTick++;
-		if(localTick >= ConstantParams.getNumberOfParticles() - 1) {
+		if(localTick >= ConstantParams.getNumberOfParticules() - 1) {
 			this.localTick = 0;
 			this.tick++;
 			setChanged();
@@ -82,7 +77,7 @@ public class Environnement extends Observable {
 	@Override
 	public String toString() {
 		String output = "";
-		int scale = String.valueOf(ConstantParams.getNumberOfParticles()).length();
+		int scale = String.valueOf(ConstantParams.getNumberOfParticules()).length();
 		for(int i = 0; i < environnement.length; i++) {
 			for(int j = 0; j < environnement[i].length; j++) {
 				output += "|";

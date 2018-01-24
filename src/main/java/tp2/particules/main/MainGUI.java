@@ -1,8 +1,11 @@
-package tp2;
+package tp2.particules.main;
 
-import tp2.sma.SMA;
-import tp2.model.ConstantParams;
-import tp2.model.Environnement;
+import tp2.ConstantParams;
+import tp2.core.Environnement;
+import tp2.particules.sma.SMA;
+import tp2.particules.sma.SMARandom;
+import tp2.particules.sma.SMASequential;
+import tp2.particules.sma.SMASequentialRandom;
 import tp2.view.MainFrame;
 
 public class MainGUI {
@@ -10,7 +13,7 @@ public class MainGUI {
 	public static void main(String[] args) throws InterruptedException {
 		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
 				ConstantParams.getTorus());
-		SMA sma = ConstantParams.getSMA();
+		SMA sma = initSMA();
 		sma.initAgent(env);
 
 		new MainFrame(env);
@@ -24,9 +27,21 @@ public class MainGUI {
 	}
 
 	private static void executeOneTick(SMA sma) throws InterruptedException {
-		for (int j = 0; j < ConstantParams.getNumberOfParticles(); j++) {
+		for (int j = 0; j < ConstantParams.getNumberOfParticules(); j++) {
 			sma.run();
 		}
 		Thread.sleep(ConstantParams.getDelay());
+	}
+	
+	private static SMA initSMA() {
+		switch (ConstantParams.getSMA()) {
+		case ALLRANDOM:
+			return new SMARandom();
+		case SEQUENTIALRANDOM:
+			return new SMASequentialRandom();
+		case SEQUENTIAL:
+		default:
+			return new SMASequential();
+		}
 	}
 }

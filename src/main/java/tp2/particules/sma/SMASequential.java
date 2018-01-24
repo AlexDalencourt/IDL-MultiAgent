@@ -1,4 +1,4 @@
-package tp2.sma;
+package tp2.particules.sma;
 
 public class SMASequential extends SMA {
 

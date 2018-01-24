@@ -1,15 +1,14 @@
-package tp2.model;
+package tp2.particules;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+import tp2.ConstantParams;
 import tp2.Logger;
+import tp2.core.Agent;
+import tp2.core.Environnement;
 
-public class Agent {
-	private int id;
-
-	private Environnement env;
-
-	private int posX;
-
-	private int posY;
+public class Particule extends Agent {
 
 	private int pasX;
 
@@ -17,21 +16,14 @@ public class Agent {
 	
 	private boolean collision;
 
-	public Agent(int id, int posX, int posY, int pasX, int pasY, Environnement env) {
-		this.id = id;
-		this.posX = posX;
-		this.posY = posY;
+	public Particule(int id, int posX, int posY, int pasX, int pasY, Environnement env) {
+		super(id,posX,posY,env);
 		this.pasX = pasX;
 		this.pasY = pasY;
-		this.env = env;
-		this.env.putAgent(this);
 		collision = false;
 	}
 
-	public int getId() {
-		return id;
-	}
-
+	@Override
 	public void decide() {
 		boolean invertScale = false;
 		if(env.checkOutOfBorders(getNewPosX(), getNewPosY())) {
@@ -51,20 +43,26 @@ public class Agent {
 		}
 	}
 
-	public int getPosX() {
-		return posX;
+	@Override
+	public void update() {
+		this.posX = this.getNewPosX();
+		this.posY = this.getNewPosY();
+		if(env.getTorus()) {
+			this.posX = env.calculateTorus(posX, ConstantParams.getGridSizeX());
+			this.posY = env.calculateTorus(posY, ConstantParams.getGridSizeY());
+		}
 	}
-
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-
-	public int getPosY() {
-		return posY;
-	}
-
-	public void setPosY(int posY) {
-		this.posY = posY;
+	
+	@Override
+	public void drawAgent(Graphics g) {
+		int pixelPosX = ConstantParams.getBoxSize() * posX;
+		int pixelPosY = ConstantParams.getBoxSize() * posY;
+		if(collision) {
+			g.setColor(Color.RED);
+		} else {
+			g.setColor(Color.BLACK);
+		}
+		g.fillOval(pixelPosX, pixelPosY, ConstantParams.getBoxSize(), ConstantParams.getBoxSize());
 	}
 
 	public int getNewPosX() {
@@ -79,23 +77,6 @@ public class Agent {
 		return collision;
 	}
 	
-	public void update() {
-		this.posX = this.getNewPosX();
-		this.posY = this.getNewPosY();
-		if(env.getTorus()) {
-			if(this.posX >= ConstantParams.getGridSizeX()) {
-				this.posX = 0;
-			}else if(this.posX < 0) {
-				this.posX = ConstantParams.getGridSizeX() - 1;
-			}
-			if(this.posY >= ConstantParams.getGridSizeY()) {
-				this.posY = 0;
-			}else if (this.posY < 0) {
-				this.posY = ConstantParams.getGridSizeY() - 1;
-			}
-		}
-	}
-
 	@Override
 	public String toString() {
 		return String.format("Agent id : %s , Position : [%s,%s], Pas : [%s,%s], Collision %s", id, posX, posY, pasX, pasY, collision);

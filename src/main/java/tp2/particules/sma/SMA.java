@@ -1,21 +1,22 @@
-package tp2.sma;
+package tp2.particules.sma;
 
 import tp2.Logger;
-import tp2.model.Agent;
-import tp2.model.ConstantParams;
-import tp2.model.Environnement;
+import tp2.core.Agent;
+import tp2.ConstantParams;
+import tp2.core.Environnement;
+import tp2.particules.Particule;
 
 public abstract class SMA {
 //	protected final List<Agent> agentList = new ArrayList<>();
-	protected final Agent[] agentList = new Agent[ConstantParams.getNumberOfParticles()];
+	protected final Agent[] agentList = new Agent[ConstantParams.getNumberOfParticules()];
 	
 	abstract public void run();
 
 	public void initAgent(Environnement env) {
-		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberOfParticles()) {
+		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberOfParticules()) {
 			throw new IllegalArgumentException("Nombre de particules supérieur au nombre de cases du tableau");
 		}
-		for (int i = 0; i < ConstantParams.getNumberOfParticles(); i++) {
+		for (int i = 0; i < ConstantParams.getNumberOfParticules(); i++) {
 			int posX, posY, pasX = 0, pasY = 0;
 			do {
 				posX = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX());
@@ -26,7 +27,7 @@ public abstract class SMA {
 				}
 			} while (!env.isEmptyCellule(posX, posY));
 //			agentList.add(new Agent(i, posX, posY, pasX, pasY, env));
-			agentList[i] = new Agent(i, posX, posY, pasX, pasY, env);
+			agentList[i] = new Particule(i, posX, posY, pasX, pasY, env);
 		}
 		Logger.log(agentList);
 	}

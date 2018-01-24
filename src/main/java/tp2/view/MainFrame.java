@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import tp2.model.ConstantParams;
-import tp2.model.Environnement;
+import tp2.ConstantParams;
+import tp2.core.Environnement;
 
 public class MainFrame extends JFrame {
 
@@ -27,10 +27,8 @@ public class MainFrame extends JFrame {
 
 	private void init() {
 		// 15 est la large ou hauteur en fonction de l'axe de l'ascenseur
-		int sizeX = ConstantParams.getCanvasSizeX() + (int)(ConstantParams
-				.getCanvasSizeX() / ConstantParams.getBoxSize()) + 15;
-		int sizeY = ConstantParams.getCanvasSizeY() + (int)(ConstantParams
-				.getCanvasSizeY() / ConstantParams.getBoxSize()) + 15;
+		int sizeX = ConstantParams.getCanvasSizeX() + 15;
+		int sizeY = ConstantParams.getCanvasSizeY() + 15;
 		displayer = new Displayer(env);
 		JScrollPane scrollPanel = new JScrollPane(displayer);
 		setContentPane(scrollPanel);

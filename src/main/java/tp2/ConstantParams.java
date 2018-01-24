@@ -1,4 +1,4 @@
-package tp2.model;
+package tp2;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,20 +9,15 @@ import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 
-import tp2.sma.SMA;
-import tp2.sma.SMARandom;
-import tp2.sma.SMASequential;
-import tp2.sma.SMASequentialRandom;
-
 public class ConstantParams {
 	
 	public static int numberOfNeighbours = 8;
 	
 	private static Random random = null;
 	
-	private static SMA sma = null;
-
 	private static Properties props;
+	
+	private static int boxSize;
 	
 	static {
 		Scanner scan = new Scanner(System.in);
@@ -36,21 +31,49 @@ public class ConstantParams {
 		} catch (IOException e) {
 			throw new RuntimeException("Bad path to properties");
 		}
+		int seed = Integer.valueOf(props.getProperty("seed"));
+		if(seed != 0) {
+			random = new Random(seed);
+		}else {
+			random = new Random(System.currentTimeMillis());
+		}
+		String value = props.getProperty("box.size", "auto");
+		if("auto".equals(value.trim().toLowerCase())) {
+			boxSize = ConstantParams.getCanvasSizeX() < ConstantParams.getCanvasSizeY() ? 
+					ConstantParams.getCanvasSizeX() / ConstantParams.getGridSizeX() : 
+						ConstantParams.getCanvasSizeY() / ConstantParams.getGridSizeY();
+		} else if(StringUtils.isNumeric(value)) {
+			boxSize = Integer.valueOf(props.getProperty("box.size"));
+		} else {
+			throw new RuntimeException("Box size value " + value + " is not a correct value (auto or a number)");
+		}
 	}
 	
-	public static int getNumberOfParticles() {
+	public static int getNumberOfParticules() {
 		return Integer.valueOf(props.getProperty("nb.particles"));
 	}
 	
+	public static int getNumberInitialOfSharks() {
+		return Integer.valueOf(props.getProperty("nb.sharks"));
+	}
+	
+	public static int getSharkBreedTime() {
+		return Integer.valueOf(props.getProperty("shark.breed.time"));
+	}
+	
+	public static int getSharkStarveTime() {
+		return Integer.valueOf(props.getProperty("shark.starve.time"));
+	}
+	
+	public static int getFishBreedTime() {
+		return Integer.valueOf(props.getProperty("fish.breed.time"));
+	}
+	
+	public static int getNumberInitialOfFishes() {
+		return Integer.valueOf(props.getProperty("nb.fishes"));
+	}
+	
 	public static Random getRandom() {
-		if(random == null) {
-			int seed = Integer.valueOf(props.getProperty("seed"));
-			if(seed != 0) {
-				random = new Random(5);
-			}else {
-				random = new Random(System.currentTimeMillis());
-			}
-		}
 		return random;
 	}
 
@@ -66,22 +89,8 @@ public class ConstantParams {
 		return Boolean.valueOf(props.getProperty("torus"));
 	}
 
-	public static SMA getSMA() {
-		if(sma == null) {
-			switch (SMATypes.valueOf(props.getProperty("scheduling"))) {
-			case SEQUENTIAL:
-				sma = new SMASequential();
-				break;
-			case SEQUENTIALRANDOM:
-				sma = new SMASequentialRandom();
-				break;
-			case ALLRANDOM:
-			default:
-				sma = new SMARandom();
-				break;
-			}
-		}
-		return sma;
+	public static SMATypes getSMA() {
+		return SMATypes.valueOf(props.getProperty("scheduling"));
 	}
 
 	public static int getNumberOfTicks() {
@@ -97,18 +106,7 @@ public class ConstantParams {
 	}
 
 	public static int getBoxSize() {
-		String value = props.getProperty("box.size", "auto");
-		int size;
-		if("auto".equals(value.trim().toLowerCase())) {
-			size = ConstantParams.getCanvasSizeX() < ConstantParams.getCanvasSizeY() ? 
-					ConstantParams.getCanvasSizeX() / ConstantParams.getGridSizeX() : 
-						ConstantParams.getCanvasSizeY() / ConstantParams.getGridSizeY();
-		} else if(StringUtils.isNumeric(value)) {
-			size = Integer.valueOf(props.getProperty("box.size"));
-		} else {
-			throw new RuntimeException("Box size value " + value + " is not a correct value (auto or a number)");
-		}
-		return size;
+		return boxSize;
 	}
 
 	public static long getDelay() {
@@ -127,7 +125,7 @@ public class ConstantParams {
 		return Integer.valueOf(props.getProperty("refresh"));
 	}
 	
-	private enum SMATypes {
+	public enum SMATypes {
 		SEQUENTIAL, SEQUENTIALRANDOM, ALLRANDOM
 	}
 }

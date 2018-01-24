@@ -8,14 +8,11 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import tp2.model.ConstantParams;
-import tp2.model.Environnement;
+import tp2.ConstantParams;
+import tp2.core.Environnement;
 
 public class Displayer extends JPanel implements Observer {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5921995227209226746L;
 
 	private Environnement env;
@@ -27,8 +24,8 @@ public class Displayer extends JPanel implements Observer {
 	public Displayer(Environnement env) {
 		this.env = env;
 		this.env.addObserver(this);
-		this.frameSizeX = ConstantParams.getGridSizeX() * ConstantParams.getBoxSize() + ConstantParams.getGridSizeX();
-		this.frameSizeY = ConstantParams.getGridSizeY() * ConstantParams.getBoxSize() + ConstantParams.getGridSizeY();
+		this.frameSizeX = ConstantParams.getGridSizeX() * ConstantParams.getBoxSize();
+		this.frameSizeY = ConstantParams.getGridSizeY() * ConstantParams.getBoxSize();
 		this.setPreferredSize(new Dimension(frameSizeX,frameSizeY));
 	}
 
@@ -38,31 +35,20 @@ public class Displayer extends JPanel implements Observer {
 		this.setBackground(Color.WHITE);
 		g.setColor(Color.BLACK);
 		if (ConstantParams.showGrid()) {
-			for (int i = ConstantParams.getBoxSize() + 1; i < frameSizeX; i += ConstantParams.getBoxSize() + 1) {
+			for (int i = ConstantParams.getBoxSize(); i < frameSizeX; i += ConstantParams.getBoxSize()) {
 				g.drawLine(i, 0, i, frameSizeY);
 			}
-			for (int i = ConstantParams.getBoxSize() + 1; i < frameSizeY; i += ConstantParams.getBoxSize() + 1) {
+			for (int i = ConstantParams.getBoxSize(); i < frameSizeY; i += ConstantParams.getBoxSize()) {
 				g.drawLine(0, i, frameSizeX, i);
 			}
 		}
 		for (int i = 0; i < env.getEnvironnement().length; i++) {
 			for (int j = 0; j < env.getEnvironnement()[i].length; j++) {
 				if (env.getEnvironnement()[i][j] != null) {
-					drawBall(g, i, j, env.getEnvironnement()[i][j].getCollision());
+					env.getEnvironnement()[i][j].drawAgent(g);
 				}
 			}
 		}
-	}
-
-	private void drawBall(Graphics g, int x, int y, boolean collision) {
-		int posX = (ConstantParams.getBoxSize() + 1) * x;
-		int posY = (ConstantParams.getBoxSize() + 1) * y;
-		if(collision) {
-			g.setColor(Color.RED);
-		} else {
-			g.setColor(Color.BLACK);
-		}
-		g.fillOval(posX, posY, ConstantParams.getBoxSize() + 1, ConstantParams.getBoxSize() + 1);
 	}
 
 	@Override
