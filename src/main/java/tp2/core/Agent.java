@@ -3,7 +3,6 @@ package tp2.core;
 import java.awt.Graphics;
 
 public abstract class Agent {
-	protected int id;
 
 	protected Environnement env;
 
@@ -11,8 +10,7 @@ public abstract class Agent {
 
 	protected int posY;
 
-	public Agent(int id, int posX, int posY, Environnement env) {
-		this.id = id;
+	public Agent(int posX, int posY, Environnement env) {
 		this.posX = posX;
 		this.posY = posY;
 		this.env = env;
@@ -28,10 +26,6 @@ public abstract class Agent {
 	public abstract int getNewPosX();
 	
 	public abstract int getNewPosY();
-	
-	public int getId() {
-		return id;
-	}
 
 	public int getPosX() {
 		return posX;
@@ -51,6 +45,6 @@ public abstract class Agent {
 
 	@Override
 	public String toString() {
-		return String.format("Agent id : %s , Position : [%s,%s]", id, posX, posY);
+		return String.format("Agent Position : [%s,%s]", posX, posY);
 	}
 }

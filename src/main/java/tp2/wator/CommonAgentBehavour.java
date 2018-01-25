@@ -17,12 +17,14 @@ public abstract class CommonAgentBehavour extends Agent {
 	
 	protected final List<Integer> availableMovement = new ArrayList<>();
 	
-	public CommonAgentBehavour(int id, int posX, int posY, Environnement env, int breed, Color agentColor) {
-		super(id,posX,posY,env);
+	public CommonAgentBehavour(int posX, int posY, Environnement env, int breed, Color agentColor) {
+		super(posX,posY,env);
 		this.breed = breed;
 		this.agentColor = agentColor;
 	}
 
+	public abstract boolean canBeEat();
+	
 	@Override
 	public void drawAgent(Graphics g) {
 		int pixelPosX = ConstantParams.getBoxSize() * posX;

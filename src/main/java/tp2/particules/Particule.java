@@ -10,6 +10,8 @@ import tp2.core.Environnement;
 
 public class Particule extends Agent {
 
+	private int id;
+	
 	private int pasX;
 
 	private int pasY;
@@ -17,7 +19,8 @@ public class Particule extends Agent {
 	private boolean collision;
 
 	public Particule(int id, int posX, int posY, int pasX, int pasY, Environnement env) {
-		super(id,posX,posY,env);
+		super(posX,posY,env);
+		this.id = id;
 		this.pasX = pasX;
 		this.pasY = pasY;
 		collision = false;

@@ -7,47 +7,51 @@ import tp2.core.Environnement;
 
 public class Fish extends CommonAgentBehavour{
 	
-	public Fish(int id, int posX, int posY, Environnement env) {
-		super(id, posX, posY, env, ConstantParams.getFishBreedTime(), Color.GREEN);
-		// TODO Auto-generated constructor stub
+	private int newCoord;
+	
+	public Fish(int posX, int posY, Environnement env) {
+		super(posX, posY, env, ConstantParams.getFishBreedTime(), Color.GREEN);
 	}
 
 	@Override
 	public void decide() {
 		availableMovement.clear();
+		// Check torus + outband + add pos (actual pos -1 0 1)
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++) {
 				if(env.getCell(i,j) == null) {
-					availableMovement.add((i << 0x4) + j);
+					availableMovement.add(((i + 1) << 0x4) + (j + 1));
 				}
 			}
 		}
-		int coord = availableMovement.get(ConstantParams.getRandom().nextInt(availableMovement.size()));
-		int x = coord >> 0x4;
-		int y = coord & 0b1111;			
+		if(!availableMovement.isEmpty()) {
+			newCoord = availableMovement.get(ConstantParams.getRandom().nextInt(availableMovement.size()));
+			env.applyTransition(this);
+		}
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		if(--breed <= 0) {
+			env.addNewAgent(new Fish(posX, posY, env));
+		}
+		posX = (newCoord >> 0x4) - 1;
+		posY = (newCoord & 0b1111) - 1;
+	}
+	
+	@Override
+	public boolean canBeEat() {
+		return true;
 	}
 	
 	@Override
 	public int getNewPosX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (newCoord >> 0x4) - 1;
 	}
 
 	@Override
 	public int getNewPosY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	public static void main(String[] args) {
-		int test = (1 << 0x4) + 1;
-		System.out.println(test + " : " + Integer.toBinaryString(test) + " : " + (test >> 0x4) + " : " + (test & 0b1111));
+		return (newCoord & 0b1111) - 1;
 	}
 	
 }

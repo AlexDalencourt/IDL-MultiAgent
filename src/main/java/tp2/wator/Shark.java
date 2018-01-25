@@ -7,8 +7,8 @@ import tp2.core.Environnement;
 
 public class Shark extends CommonAgentBehavour{
 
-	public Shark(int id, int posX, int posY, Environnement env) {
-		super(id, posX, posY, env, ConstantParams.getSharkBreedTime(), Color.RED);
+	public Shark(int posX, int posY, Environnement env) {
+		super(posX, posY, env, ConstantParams.getSharkBreedTime(), Color.RED);
 	}
 
 	@Override
@@ -25,6 +25,11 @@ public class Shark extends CommonAgentBehavour{
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public boolean canBeEat() {
+		return false;
 	}
 	
 	@Override
