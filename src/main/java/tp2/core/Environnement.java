@@ -74,6 +74,10 @@ public class Environnement extends Observable {
 		return torus;
 	}
 
+	public Object getCell(int x, int y) {
+		return environnement[x][y];
+	}
+
 	@Override
 	public String toString() {
 		String output = "";

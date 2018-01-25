@@ -1,22 +1,23 @@
 package tp2.wator;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import tp2.ConstantParams;
-import tp2.core.Agent;
 import tp2.core.Environnement;
 
-public class Shark extends Agent{
+public class Shark extends CommonAgentBehavour{
 
 	public Shark(int id, int posX, int posY, Environnement env) {
-		super(id, posX, posY, env);
-		// TODO Auto-generated constructor stub
+		super(id, posX, posY, env, ConstantParams.getSharkBreedTime(), Color.RED);
 	}
 
 	@Override
 	public void decide() {
-		// TODO Auto-generated method stub
+		int x,y;
+		do {
+			x = ConstantParams.getRandom().nextInt(3);
+			y = ConstantParams.getRandom().nextInt(3);
+		}while(x == 0 && y == 0);
 		
 	}
 
@@ -36,14 +37,6 @@ public class Shark extends Agent{
 	public int getNewPosY() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public void drawAgent(Graphics g) {
-		int pixelPosX = ConstantParams.getBoxSize() * posX;
-		int pixelPosY = ConstantParams.getBoxSize() * posY;
-		g.setColor(Color.RED);
-		g.fillOval(pixelPosX, pixelPosY, ConstantParams.getBoxSize(), ConstantParams.getBoxSize());
 	}
 
 }

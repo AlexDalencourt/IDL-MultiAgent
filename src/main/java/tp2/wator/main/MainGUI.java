@@ -27,9 +27,7 @@ public class MainGUI {
 	}
 
 	private static void executeOneTick(SMA sma) throws InterruptedException {
-		for (int j = 0; j < ConstantParams.getNumberOfParticules(); j++) {
-			sma.run();
-		}
+		sma.run();
 		Thread.sleep(ConstantParams.getDelay());
 	}
 	
