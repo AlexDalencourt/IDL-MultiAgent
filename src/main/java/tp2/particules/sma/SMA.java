@@ -1,17 +1,17 @@
 package tp2.particules.sma;
 
+import tp2.ConstantParams;
 import tp2.Logger;
 import tp2.core.Agent;
-import tp2.ConstantParams;
 import tp2.core.Environnement;
+import tp2.core.SMAInterface;
 import tp2.particules.Particule;
 
-public abstract class SMA {
+public abstract class SMA implements SMAInterface {
 //	protected final List<Agent> agentList = new ArrayList<>();
 	protected final Agent[] agentList = new Agent[ConstantParams.getNumberOfParticules()];
 	
-	abstract public void run();
-
+	@Override
 	public void initAgent(Environnement env) {
 		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberOfParticules()) {
 			throw new IllegalArgumentException("Nombre de particules supérieur au nombre de cases du tableau");
@@ -30,6 +30,11 @@ public abstract class SMA {
 			agentList[i] = new Particule(i, posX, posY, pasX, pasY, env);
 		}
 		Logger.log(agentList);
+	}
+	
+	@Override
+	public void addAgent(Agent agent) {
+		
 	}
 
 }
