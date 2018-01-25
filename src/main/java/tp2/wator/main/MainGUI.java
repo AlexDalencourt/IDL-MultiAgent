@@ -11,9 +11,9 @@ import tp2.view.MainFrame;
 public class MainGUI {
 
 	public static void main(String[] args) throws InterruptedException {
-		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
-				ConstantParams.getTorus());
 		SMA sma = initSMA();
+		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
+			ConstantParams.getTorus(),sma);
 		sma.initAgent(env);
 
 		new MainFrame(env);

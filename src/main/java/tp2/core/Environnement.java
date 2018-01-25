@@ -3,9 +3,11 @@ package tp2.core;
 import java.util.Observable;
 
 import tp2.ConstantParams;
-import tp2.Logger;
 
 public class Environnement extends Observable {
+
+	private SMAInterface sma;
+	
 	private Agent[][] environnement;
 	
 	private boolean torus;
@@ -14,7 +16,8 @@ public class Environnement extends Observable {
 	
 	private int localTick;
 	
-	public Environnement(int x, int y, boolean torus) {
+	public Environnement(int x, int y, boolean torus, SMAInterface sma) {
+		this.sma = sma;
 		this.environnement = new Agent[x][y];
 		this.torus = torus;
 		this.tick = 0;
@@ -42,14 +45,15 @@ public class Environnement extends Observable {
 	}
 	
 	public void applyTransition(Agent agent) {
-		Logger.log(String.format("Apply transition agent %s : [%s,%s] -> [%s,%s]", agent.getId(),agent.getPosX(),agent.getPosY(),agent.getNewPosX(),agent.getNewPosY()));
 		
 		environnement[agent.getPosX()][agent.getPosY()] = null;
 		agent.update();
 		environnement[agent.getPosX()][agent.getPosY()] = agent;
-		Logger.log(this);
-
-		tickUpdate();
+	}
+	
+	public void addNewAgent(Agent agent) {
+		sma.addAgent(agent);
+		this.putAgent(agent);
 	}
 	
 	public void tickUpdate() {
@@ -76,25 +80,6 @@ public class Environnement extends Observable {
 
 	public Object getCell(int x, int y) {
 		return environnement[x][y];
-	}
-
-	@Override
-	public String toString() {
-		String output = "";
-		int scale = String.valueOf(ConstantParams.getNumberOfParticules()).length();
-		for(int i = 0; i < environnement.length; i++) {
-			for(int j = 0; j < environnement[i].length; j++) {
-				output += "|";
-				if(environnement[i][j] != null) {
-					output += environnement[i][j].getId();
-				}
-				for(int k = 0; k < (environnement[i][j] != null ? scale - String.valueOf(environnement[i][j].getId()).length() : scale); k++) {
-					output += " ";
-				}
-			}
-			output += "|\n";
-		}
-		return output;
 	}
 	
 }
