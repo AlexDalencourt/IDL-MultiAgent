@@ -12,16 +12,10 @@ public class Environnement extends Observable {
 	
 	private boolean torus;
 	
-	private int tick;
-	
-	private int localTick;
-	
 	public Environnement(int x, int y, boolean torus, SMAInterface sma) {
 		this.sma = sma;
 		this.environnement = new Agent[x][y];
 		this.torus = torus;
-		this.tick = 0;
-		this.localTick = 0;
 	}
 
 	public void putAgent(Agent agent) {
@@ -47,8 +41,14 @@ public class Environnement extends Observable {
 	public void applyTransition(Agent agent) {
 		
 		environnement[agent.getPosX()][agent.getPosY()] = null;
+		setChanged();
+		notifyObservers();
 		agent.update();
+		setChanged();
+		notifyObservers();
 		environnement[agent.getPosX()][agent.getPosY()] = agent;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void addNewAgent(Agent agent) {
@@ -56,22 +56,13 @@ public class Environnement extends Observable {
 		this.putAgent(agent);
 	}
 	
-	public void tickUpdate() {
-		this.localTick++;
-		if(localTick >= ConstantParams.getNumberOfParticules() - 1) {
-			this.localTick = 0;
-			this.tick++;
-			setChanged();
-			notifyObservers();
-		}
+	public void updateDisplay() {
+		setChanged();
+		notifyObservers();
 	}
 	
 	public Agent[][] getEnvironnement() {
 		return environnement;
-	}
-	
-	public int getTick() {
-		return tick;
 	}
 	
 	public boolean getTorus() {
@@ -79,7 +70,7 @@ public class Environnement extends Observable {
 	}
 
 	public Object getCell(int x, int y) {
-		return environnement[x][y];
+		return environnement[calculateTorus(x, environnement.length)][calculateTorus(y, environnement[0].length)];
 	}
 	
 }
