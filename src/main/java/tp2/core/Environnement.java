@@ -39,16 +39,9 @@ public class Environnement extends Observable {
 	}
 	
 	public void applyTransition(Agent agent) {
-		
 		environnement[agent.getPosX()][agent.getPosY()] = null;
-		setChanged();
-		notifyObservers();
 		agent.update();
-		setChanged();
-		notifyObservers();
 		environnement[agent.getPosX()][agent.getPosY()] = agent;
-		setChanged();
-		notifyObservers();
 	}
 	
 	public void addNewAgent(Agent agent) {

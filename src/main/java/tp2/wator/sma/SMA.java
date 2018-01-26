@@ -1,5 +1,6 @@
 package tp2.wator.sma;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,10 @@ import tp2.wator.Fish;
 import tp2.wator.Shark;
 
 public abstract class SMA implements SMAInterface {
+	
 	protected final List<Agent> agentList = new LinkedList<>();
+	
+	protected final List<Agent> newAgentList = new ArrayList<>();
 	
 	public void initAgent(Environnement env) {
 		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberInitialOfFishes()+ConstantParams.getNumberInitialOfSharks()) {
@@ -36,9 +40,9 @@ public abstract class SMA implements SMAInterface {
 		}
 		Logger.log(agentList);
 	}
-
+	
 	@Override
 	public void addAgent(Agent agent) {
-		this.agentList.add(agent);
+		this.newAgentList.add(agent);
 	}
 }
