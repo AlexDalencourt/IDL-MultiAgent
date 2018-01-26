@@ -40,7 +40,6 @@ public class Particule extends Agent {
 			pasX *= -1;
 			pasY *= -1;
 			collision = true;
-			env.tickUpdate();
 		} else {
 			env.applyTransition(this);
 		}

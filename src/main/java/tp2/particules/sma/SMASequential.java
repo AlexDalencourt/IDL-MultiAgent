@@ -2,19 +2,11 @@ package tp2.particules.sma;
 
 public class SMASequential extends SMA {
 
-	private int cursor = 0; 
-	
 	@Override
 	public void run() {
-		agentList[cursor].decide();
-		if(++cursor >= agentList.length) {
-			cursor = 0;
-		};
+		for(int i = 0; i < agentList.length; i++) {
+			agentList[i].decide();
+		}
 	}
-//	public void run() {
-//		Agent agent = agentList.remove(0);
-//		agent.decide();
-//		agentList.add(agent);
-//	}
 
 }
