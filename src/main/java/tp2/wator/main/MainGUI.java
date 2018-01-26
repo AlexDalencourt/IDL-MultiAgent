@@ -18,11 +18,16 @@ public class MainGUI {
 
 		new MainFrame(env);
 		Thread.sleep(ConstantParams.getDelay());
+		int tickNumber = 0;
 		while (true) {
-			if (ConstantParams.getNumberOfTicks() != 0 && env.getTick() < ConstantParams.getNumberOfTicks()) {
+			if (ConstantParams.getNumberOfTicks() != 0 && tickNumber < ConstantParams.getNumberOfTicks()) {
 				break;
 			}
 			executeOneTick(sma);
+			tickNumber++;
+			if(tickNumber % ConstantParams.refresh() == 0) {
+				env.updateDisplay();
+			}
 		}
 	}
 

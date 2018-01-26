@@ -16,10 +16,12 @@ public class Fish extends CommonAgentBehavour{
 	@Override
 	public void decide() {
 		availableMovement.clear();
-		// Check torus + outband + add pos (actual pos -1 0 1)
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++) {
-				if(env.getCell(i,j) == null) {
+				int calculatedX = i + posX;
+				int calculatedY = j + posY;
+				if(!env.checkOutOfBorders(calculatedX, calculatedY)
+						&& env.getCell(calculatedX,calculatedY) == null) {
 					availableMovement.add(((i + 1) << 0x4) + (j + 1));
 				}
 			}
@@ -34,9 +36,10 @@ public class Fish extends CommonAgentBehavour{
 	public void update() {
 		if(--breed <= 0) {
 			env.addNewAgent(new Fish(posX, posY, env));
+			breed = ConstantParams.getFishBreedTime();
 		}
-		posX = (newCoord >> 0x4) - 1;
-		posY = (newCoord & 0b1111) - 1;
+		posX += (newCoord >> 0x4) - 1;
+		posY += (newCoord & 0b1111) - 1;
 	}
 	
 	@Override
@@ -46,12 +49,12 @@ public class Fish extends CommonAgentBehavour{
 	
 	@Override
 	public int getNewPosX() {
-		return (newCoord >> 0x4) - 1;
+		return posX + (newCoord >> 0x4) - 1;
 	}
 
 	@Override
 	public int getNewPosY() {
-		return (newCoord & 0b1111) - 1;
+		return posY + (newCoord & 0b1111) - 1;
 	}
 	
 }
