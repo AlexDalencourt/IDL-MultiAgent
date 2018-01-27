@@ -28,6 +28,7 @@ public class MainGUI {
 			if(tick % ConstantParams.refresh() == 0) {
 				env.updateDisplay();
 			}
+			
 		}
 	}
 

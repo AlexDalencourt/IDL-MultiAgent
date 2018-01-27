@@ -28,6 +28,7 @@ public class MainGUI {
 			if(tickNumber % ConstantParams.refresh() == 0) {
 				env.updateDisplay();
 			}
+			sma.addNewGeneration();
 		}
 	}
 
