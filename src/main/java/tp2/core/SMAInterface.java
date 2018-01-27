@@ -7,4 +7,6 @@ public interface SMAInterface {
 	public void run();
 
 	public void addAgent(Agent agent);
+
+	public void removeAgent(Agent agent);
 }
