@@ -31,16 +31,16 @@ public class Shark extends CommonAgentBehavour{
 	public void decide() {
 		breed--;
 		fishes.clear();
+		emptyCell.clear();
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++) {
 				int calculatedX = i + posX;
 				int calculatedY = j + posY;
-				if(!env.checkOutOfBorders(calculatedX, calculatedY)
-						&& env.getCell(calculatedX,calculatedY) != null) {
-					if(((CommonAgentBehavour)env.getCell(calculatedX, calculatedY)).canBeEat()){
-						fishes.add(((i + 1) << 0x4) + (j + 1));
-					} else {
+				if(!env.checkOutOfBorders(calculatedX, calculatedY)) {
+					if(env.getCell(calculatedX,calculatedY) == null){
 						emptyCell.add(((i + 1) << 0x4) + (j + 1));
+					} else if(((CommonAgentBehavour)env.getCell(calculatedX, calculatedY)).canBeEat()){
+						fishes.add(((i + 1) << 0x4) + (j + 1));
 					}
 				}
 			}
@@ -52,12 +52,12 @@ public class Shark extends CommonAgentBehavour{
 			env.applyTransition(this);
 		} else {
 			starve--;
-			if(starve <= 0) {
+			if(starve < 0) {
 				env.deleteAgent(this);
 				env.getEnvironnement()[posX][posY] = null;
 			} else if(!emptyCell.isEmpty()) {
 				eat = false;
-				newCoord = fishes.get(ConstantParams.getRandom().nextInt(fishes.size()));
+				newCoord = emptyCell.get(ConstantParams.getRandom().nextInt(emptyCell.size()));
 				env.applyTransition(this);
 			}
 		}
@@ -65,7 +65,7 @@ public class Shark extends CommonAgentBehavour{
 
 	@Override
 	public void update() {
-		if(breed <= 0) {
+		if(breed < 0) {
 			env.addNewAgent(new Fish(posX, posY, env, Color.YELLOW));
 			breed = ConstantParams.getFishBreedTime();
 		}
@@ -84,5 +84,10 @@ public class Shark extends CommonAgentBehavour{
 	@Override
 	public void changeGenerationAgent() {
 		this.agentColor = Color.RED;
+	}
+	
+	@Override
+	public String toString() {
+		return "Shark " + super.toString();
 	}
 }

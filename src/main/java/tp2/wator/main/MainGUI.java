@@ -23,20 +23,16 @@ public class MainGUI {
 			if (ConstantParams.getNumberOfTicks() != 0 && tickNumber < ConstantParams.getNumberOfTicks()) {
 				break;
 			}
-			executeOneTick(sma);
+			sma.run();
 			tickNumber++;
 			if(tickNumber % ConstantParams.refresh() == 0) {
 				env.updateDisplay();
 			}
+			Thread.sleep(ConstantParams.getDelay());
 			sma.addNewGeneration();
 		}
 	}
 
-	private static void executeOneTick(SMA sma) throws InterruptedException {
-		sma.run();
-		Thread.sleep(ConstantParams.getDelay());
-	}
-	
 	private static SMA initSMA() {
 		switch (ConstantParams.getSMA()) {
 		case ALLRANDOM:

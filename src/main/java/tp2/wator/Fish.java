@@ -41,7 +41,7 @@ public class Fish extends CommonAgentBehavour{
 
 	@Override
 	public void update() {
-		if(breed <= 0) {
+		if(breed < 0) {
 			env.addNewAgent(new Fish(posX, posY, env, Color.YELLOW));
 			breed = ConstantParams.getFishBreedTime();
 		}
@@ -57,5 +57,10 @@ public class Fish extends CommonAgentBehavour{
 	@Override
 	public void changeGenerationAgent() {
 		this.agentColor = Color.GREEN;
-	}	
+	}
+	
+	@Override
+	public String toString() {
+		return "Fish " + super.toString();
+	}
 }
