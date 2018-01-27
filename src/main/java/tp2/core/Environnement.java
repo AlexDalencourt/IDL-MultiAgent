@@ -3,6 +3,7 @@ package tp2.core;
 import java.util.Observable;
 
 import tp2.ConstantParams;
+import tp2.wator.Shark;
 
 public class Environnement extends Observable {
 
@@ -62,8 +63,16 @@ public class Environnement extends Observable {
 		return torus;
 	}
 
-	public Object getCell(int x, int y) {
+	public Agent getCell(int x, int y) {
 		return environnement[calculateTorus(x, environnement.length)][calculateTorus(y, environnement[0].length)];
+	}
+
+	public void deleteAgent(int x, int y) {
+		this.deleteAgent(getCell(x, y));
+	}
+
+	public void deleteAgent(Agent agent) {
+		sma.removeAgent(agent);
 	}
 	
 }
