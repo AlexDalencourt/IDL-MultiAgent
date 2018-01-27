@@ -1,20 +1,27 @@
 package tp2.wator;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import tp2.ConstantParams;
 import tp2.core.Environnement;
 
 public class Fish extends CommonAgentBehavour{
 	
-	private int newCoord;
+	private final List<Integer> availableMovement = new ArrayList<>();
 	
 	public Fish(int posX, int posY, Environnement env) {
 		super(posX, posY, env, ConstantParams.getFishBreedTime(), Color.GREEN);
 	}
 
+	public Fish(int posX, int posY, Environnement env, Color color) {
+		super(posX, posY, env, ConstantParams.getFishBreedTime(), color);
+	}
+	
 	@Override
 	public void decide() {
+		breed--;
 		availableMovement.clear();
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++) {
@@ -29,13 +36,13 @@ public class Fish extends CommonAgentBehavour{
 		if(!availableMovement.isEmpty()) {
 			newCoord = availableMovement.get(ConstantParams.getRandom().nextInt(availableMovement.size()));
 			env.applyTransition(this);
-		}
+		} 
 	}
 
 	@Override
 	public void update() {
-		if(--breed <= 0) {
-			env.addNewAgent(new Fish(posX, posY, env));
+		if(breed <= 0) {
+			env.addNewAgent(new Fish(posX, posY, env, Color.YELLOW));
 			breed = ConstantParams.getFishBreedTime();
 		}
 		posX += (newCoord >> 0x4) - 1;
@@ -48,13 +55,7 @@ public class Fish extends CommonAgentBehavour{
 	}
 	
 	@Override
-	public int getNewPosX() {
-		return posX + (newCoord >> 0x4) - 1;
-	}
-
-	@Override
-	public int getNewPosY() {
-		return posY + (newCoord & 0b1111) - 1;
-	}
-	
+	public void changeGenerationAgent() {
+		this.agentColor = Color.GREEN;
+	}	
 }
