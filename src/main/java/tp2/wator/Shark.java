@@ -66,8 +66,8 @@ public class Shark extends CommonAgentBehavour{
 	@Override
 	public void update() {
 		if(breed < 0) {
-			env.addNewAgent(new Fish(posX, posY, env, Color.YELLOW));
-			breed = ConstantParams.getFishBreedTime();
+			env.addNewAgent(new Shark(posX, posY, env, Color.PINK));
+			breed = ConstantParams.getSharkBreedTime();
 		}
 		posX += (newCoord >> 0x4) - 1;
 		posY += (newCoord & 0b1111) - 1;
