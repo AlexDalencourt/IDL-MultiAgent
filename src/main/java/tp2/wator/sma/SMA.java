@@ -3,6 +3,7 @@ package tp2.wator.sma;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.security.auth.x500.X500Principal;
 
@@ -20,6 +21,8 @@ public abstract class SMA implements SMAInterface {
 	protected final List<Agent> agentList = new LinkedList<>();
 	
 	protected final List<Agent> nextGeneration = new ArrayList<>();
+	
+	protected ListIterator<Agent> it;
 	
 	public void initAgent(Environnement env) {
 		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberInitialOfFishes()+ConstantParams.getNumberInitialOfSharks()) {
@@ -50,9 +53,7 @@ public abstract class SMA implements SMAInterface {
 	
 	@Override
 	public void removeAgent(Agent agent) {
-		if(!agentList.remove(agent)) {
-			nextGeneration.remove(agent);
-		}
+		it.remove();
 	}
 	
 	public void addNewGeneration() {

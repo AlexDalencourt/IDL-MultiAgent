@@ -11,16 +11,24 @@ public class Fish extends CommonAgentBehavour{
 	
 	private final List<Integer> availableMovement = new ArrayList<>();
 	
+	private boolean isEat;
+	
 	public Fish(int posX, int posY, Environnement env) {
 		super(posX, posY, env, ConstantParams.getFishBreedTime(), Color.GREEN);
+		isEat = false;
 	}
 
 	public Fish(int posX, int posY, Environnement env, Color color) {
 		super(posX, posY, env, ConstantParams.getFishBreedTime(), color);
+		isEat = false;
 	}
 	
 	@Override
 	public void decide() {
+		if(isEat) {
+			env.deleteAgent(this);
+			return;
+		}
 		breed--;
 		availableMovement.clear();
 		for(int i = -1; i < 2; i++) {
@@ -57,6 +65,10 @@ public class Fish extends CommonAgentBehavour{
 	@Override
 	public void changeGenerationAgent() {
 		this.agentColor = Color.GREEN;
+	}
+	
+	public void setIsEat() {
+		isEat = true;
 	}
 	
 	@Override

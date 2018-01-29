@@ -72,7 +72,8 @@ public class Shark extends CommonAgentBehavour{
 		posX += (newCoord >> 0x4) - 1;
 		posY += (newCoord & 0b1111) - 1;
 		if(eat) {
-			env.deleteAgent(posX,posY);
+			Fish agent = (Fish) env.getCell(posX, posY);
+			agent.setIsEat();
 		}
 	}
 	

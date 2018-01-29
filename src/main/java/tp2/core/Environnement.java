@@ -67,10 +67,6 @@ public class Environnement extends Observable {
 		return environnement[calculateTorus(x, environnement.length)][calculateTorus(y, environnement[0].length)];
 	}
 
-	public void deleteAgent(int x, int y) {
-		this.deleteAgent(getCell(x, y));
-	}
-
 	public void deleteAgent(Agent agent) {
 		sma.removeAgent(agent);
 	}

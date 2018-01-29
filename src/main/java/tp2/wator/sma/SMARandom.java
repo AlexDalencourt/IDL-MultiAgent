@@ -1,6 +1,7 @@
 package tp2.wator.sma;
 
 import tp2.ConstantParams;
+import tp2.core.Agent;
 
 public class SMARandom extends SMA {
 	
@@ -11,4 +12,8 @@ public class SMARandom extends SMA {
 		}
 	}
 
+	@Override
+	public void removeAgent(Agent agent) {
+		agentList.remove(agent);
+	}
 }
