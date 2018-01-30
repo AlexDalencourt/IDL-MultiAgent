@@ -53,8 +53,8 @@ public class Fish extends CommonAgentBehavour{
 			env.addNewAgent(new Fish(posX, posY, env, Color.YELLOW));
 			breed = ConstantParams.getFishBreedTime();
 		}
-		posX += (newCoord >> 0x4) - 1;
-		posY += (newCoord & 0b1111) - 1;
+		posX = env.getTorus() ? env.calculateTorus(posX + (newCoord >> 0x4) - 1, env.getEnvironnement().length) : posX + (newCoord >> 0x4) - 1;
+		posY = env.getTorus() ? env.calculateTorus(posY + (newCoord & 0b1111) - 1, env.getEnvironnement()[0].length) : posY + (newCoord & 0b1111) - 1;
 	}
 	
 	@Override

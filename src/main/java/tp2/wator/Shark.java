@@ -69,8 +69,8 @@ public class Shark extends CommonAgentBehavour{
 			env.addNewAgent(new Shark(posX, posY, env, Color.PINK));
 			breed = ConstantParams.getSharkBreedTime();
 		}
-		posX += (newCoord >> 0x4) - 1;
-		posY += (newCoord & 0b1111) - 1;
+		posX = env.getTorus() ? env.calculateTorus(posX + (newCoord >> 0x4) - 1, env.getEnvironnement().length) : posX + (newCoord >> 0x4) - 1;
+		posY = env.getTorus() ? env.calculateTorus(posY + (newCoord & 0b1111) - 1, env.getEnvironnement()[0].length) : posY + (newCoord & 0b1111) - 1;
 		if(eat) {
 			Fish agent = (Fish) env.getCell(posX, posY);
 			agent.setIsEat();
