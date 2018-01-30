@@ -44,5 +44,10 @@ public abstract class CommonAgentBehavour extends Agent {
 	public int getNewPosY() {
 		return posY + (newCoord & 0b1111) - 1;
 	}
+	
+	@Override
+	public String toString() {
+		return breed + ";" + agentColor + ";" + super.toString();
+	}
 
 }

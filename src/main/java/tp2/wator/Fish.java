@@ -73,6 +73,6 @@ public class Fish extends CommonAgentBehavour{
 	
 	@Override
 	public String toString() {
-		return "Fish " + super.toString();
+		return "Fish;;" + super.toString();
 	}
 }

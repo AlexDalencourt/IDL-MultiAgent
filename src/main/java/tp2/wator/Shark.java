@@ -89,6 +89,6 @@ public class Shark extends CommonAgentBehavour{
 	
 	@Override
 	public String toString() {
-		return "Shark " + super.toString();
+		return "Shark;"+ starve + ";" + super.toString();
 	}
 }

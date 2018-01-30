@@ -45,6 +45,6 @@ public abstract class Agent {
 
 	@Override
 	public String toString() {
-		return String.format("Agent Position : [%s,%s]", posX, posY);
+		return posX + ";" + posY;
 	}
 }
