@@ -1,5 +1,7 @@
 package tp2.wator.main;
 
+import java.awt.Color;
+
 import tp2.ConstantParams;
 import tp2.core.Environnement;
 import tp2.wator.sma.SMA;
@@ -13,7 +15,7 @@ public class MainGUI {
 	public static void main(String[] args) throws InterruptedException {
 		SMA sma = initSMA();
 		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
-			ConstantParams.getTorus(),sma);
+			ConstantParams.getTorus(),sma, Color.CYAN);
 		sma.initAgent(env);
 
 		new MainFrame(env);

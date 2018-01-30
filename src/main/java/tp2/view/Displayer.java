@@ -32,7 +32,7 @@ public class Displayer extends JPanel implements Observer {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		this.setBackground(Color.WHITE);
+		this.setBackground(env.getBackground());
 		g.setColor(Color.BLACK);
 		if (ConstantParams.showGrid()) {
 			for (int i = ConstantParams.getBoxSize(); i < frameSizeX; i += ConstantParams.getBoxSize()) {

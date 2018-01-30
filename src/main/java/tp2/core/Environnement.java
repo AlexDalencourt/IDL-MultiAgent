@@ -1,9 +1,9 @@
 package tp2.core;
 
+import java.awt.Color;
 import java.util.Observable;
 
 import tp2.ConstantParams;
-import tp2.wator.Shark;
 
 public class Environnement extends Observable {
 
@@ -13,10 +13,18 @@ public class Environnement extends Observable {
 	
 	private boolean torus;
 	
+	private Color background;
+	
 	public Environnement(int x, int y, boolean torus, SMAInterface sma) {
 		this.sma = sma;
 		this.environnement = new Agent[x][y];
 		this.torus = torus;
+		background = Color.WHITE;
+	}
+	
+	public Environnement(int x, int y, boolean torus, SMAInterface sma, Color background) {
+		this(x,y,torus,sma);
+		this.background = background;
 	}
 
 	public void putAgent(Agent agent) {
@@ -69,6 +77,10 @@ public class Environnement extends Observable {
 
 	public void deleteAgent(Agent agent) {
 		sma.removeAgent(agent);
+	}
+
+	public Color getBackground() {
+		return background;
 	}
 	
 }
