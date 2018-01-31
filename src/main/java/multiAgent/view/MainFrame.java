@@ -1,6 +1,8 @@
 package multiAgent.view;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -22,6 +24,7 @@ public class MainFrame extends JFrame {
 		init();
 		
 		setVisible(true);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -35,4 +38,7 @@ public class MainFrame extends JFrame {
 		this.setSize(new Dimension(sizeX,sizeY));
 	}
 	
+	public void addEventKeyListener (KeyListener listener) {
+		this.addKeyListener(listener);
+	}
 }
