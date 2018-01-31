@@ -30,6 +30,9 @@ public class MainGUI {
 			if(tickNumber % ConstantParams.refresh() == 0) {
 				env.updateDisplay();
 			}
+			if(ConstantParams.showTrace()) {
+				sma.log();
+			}
 			Thread.sleep(ConstantParams.getDelay());
 			sma.addNewGeneration();
 		}

@@ -1,14 +1,14 @@
 package tp2.wator.sma;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.security.auth.x500.X500Principal;
-
 import tp2.ConstantParams;
-import tp2.Logger;
 import tp2.core.Agent;
 import tp2.core.Environnement;
 import tp2.core.SMAInterface;
@@ -23,6 +23,8 @@ public abstract class SMA implements SMAInterface {
 	protected final List<Agent> nextGeneration = new ArrayList<>();
 	
 	protected ListIterator<Agent> it;
+	
+	private PrintWriter logfile;
 	
 	public void initAgent(Environnement env) {
 		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberInitialOfFishes()+ConstantParams.getNumberInitialOfSharks()) {
@@ -44,6 +46,15 @@ public abstract class SMA implements SMAInterface {
 			}while(!env.isEmptyCellule(x, y));
 			agentList.add(new Fish(x, y, env));
 		}
+		if(ConstantParams.showTrace()) {
+			try {
+				logfile = new PrintWriter(new FileWriter("log-wator.txt"));
+				logfile.println("Agent type;Starve time;Breed time;Agent color;Age;Positon X; Position Y");
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			
+		}
 	}
 	
 	@Override
@@ -60,5 +71,11 @@ public abstract class SMA implements SMAInterface {
 		agentList.addAll(nextGeneration);
 		nextGeneration.forEach(x -> ((CommonAgentBehavour)x).changeGenerationAgent());
 		nextGeneration.clear();
+	}
+	
+	public void log() {
+		for(Agent agent : agentList) {
+			logfile.println(agent.toString());
+		}
 	}
 }

@@ -2,8 +2,6 @@ package tp2.wator;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
 
 import tp2.ConstantParams;
 import tp2.core.Agent;
@@ -16,6 +14,8 @@ public abstract class CommonAgentBehavour extends Agent {
 	protected Color agentColor;
 	
 	protected int newCoord;
+	
+	public int age = 0;
 	
 	public CommonAgentBehavour(int posX, int posY, Environnement env, int breed, Color agentColor) {
 		super(posX,posY,env);
@@ -47,7 +47,7 @@ public abstract class CommonAgentBehavour extends Agent {
 	
 	@Override
 	public String toString() {
-		return breed + ";" + agentColor + ";" + super.toString();
+		return breed + ";" + agentColor + ";" + age + ";" + super.toString();
 	}
 
 }
