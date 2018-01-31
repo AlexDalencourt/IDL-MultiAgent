@@ -1,7 +1,6 @@
 package tp2.particules.sma;
 
 import tp2.ConstantParams;
-import tp2.Logger;
 import tp2.core.Agent;
 import tp2.core.Environnement;
 import tp2.core.SMAInterface;
@@ -29,7 +28,7 @@ public abstract class SMA implements SMAInterface {
 //			agentList.add(new Agent(i, posX, posY, pasX, pasY, env));
 			agentList[i] = new Particule(i, posX, posY, pasX, pasY, env);
 		}
-		Logger.log(agentList);
+//		Logger.log(agentList);
 	}
 	
 	@Override

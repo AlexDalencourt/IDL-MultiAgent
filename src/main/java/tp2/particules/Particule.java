@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import tp2.ConstantParams;
-import tp2.Logger;
 import tp2.core.Agent;
 import tp2.core.Environnement;
 
@@ -30,10 +29,10 @@ public class Particule extends Agent {
 	public void decide() {
 		boolean invertScale = false;
 		if(env.checkOutOfBorders(getNewPosX(), getNewPosY())) {
-			Logger.log(String.format("Agent %s out of board on position: [%s,%s] calculate with pas : [%s,%s]", id, getNewPosX(), getNewPosY(), pasX, pasY));
+//			Logger.log(String.format("Agent %s out of board on position: [%s,%s] calculate with pas : [%s,%s]", id, getNewPosX(), getNewPosY(), pasX, pasY));
 			invertScale = true;
 		} else if (!env.isEmptyCellule(getNewPosX(), getNewPosY())) {
-			Logger.log(String.format("Agent %s collision detect or out of board on position : [%s,%s] calculate with pas : [%s,%s]", id, getNewPosX(), getNewPosY(), pasX, pasY));
+//			Logger.log(String.format("Agent %s collision detect or out of board on position : [%s,%s] calculate with pas : [%s,%s]", id, getNewPosX(), getNewPosY(), pasX, pasY));
 			invertScale = true;
 		}
 		if(invertScale) {
