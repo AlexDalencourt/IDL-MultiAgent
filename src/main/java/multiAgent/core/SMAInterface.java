@@ -9,4 +9,6 @@ public interface SMAInterface {
 	public void addAgent(Agent agent);
 
 	public void removeAgent(Agent agent);
+	
+	public void log();
 }

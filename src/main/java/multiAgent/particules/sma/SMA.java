@@ -40,4 +40,9 @@ public abstract class SMA implements SMAInterface {
 	public void removeAgent(Agent shark) {
 		
 	}
+	
+	@Override
+	public void log() {
+		
+	}
 }

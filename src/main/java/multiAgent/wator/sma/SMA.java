@@ -73,6 +73,7 @@ public abstract class SMA implements SMAInterface {
 		nextGeneration.clear();
 	}
 	
+	@Override
 	public void log() {
 		for(Agent agent : agentList) {
 			logfile.println(agent.toString());
