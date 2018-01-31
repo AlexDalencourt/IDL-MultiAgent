@@ -1,4 +1,4 @@
-package tp2.core;
+package multiAgent.core;
 
 public interface SMAInterface {
 

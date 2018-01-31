@@ -1,9 +1,9 @@
-package tp2.core;
+package multiAgent.core;
 
 import java.awt.Color;
 import java.util.Observable;
 
-import tp2.ConstantParams;
+import multiAgent.ConstantParams;
 
 public class Environnement extends Observable {
 

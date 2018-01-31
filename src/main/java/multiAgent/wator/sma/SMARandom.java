@@ -1,7 +1,7 @@
-package tp2.wator.sma;
+package multiAgent.wator.sma;
 
-import tp2.ConstantParams;
-import tp2.core.Agent;
+import multiAgent.ConstantParams;
+import multiAgent.core.Agent;
 
 public class SMARandom extends SMA {
 	

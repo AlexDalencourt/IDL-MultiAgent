@@ -1,4 +1,4 @@
-package tp2.particules.sma;
+package multiAgent.particules.sma;
 
 public class SMASequential extends SMA {
 

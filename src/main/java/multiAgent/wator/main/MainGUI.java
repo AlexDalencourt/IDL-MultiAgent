@@ -1,14 +1,14 @@
-package tp2.wator.main;
+package multiAgent.wator.main;
 
 import java.awt.Color;
 
-import tp2.ConstantParams;
-import tp2.core.Environnement;
-import tp2.wator.sma.SMA;
-import tp2.wator.sma.SMARandom;
-import tp2.wator.sma.SMASequential;
-import tp2.wator.sma.SMASequentialRandom;
-import tp2.view.MainFrame;
+import multiAgent.ConstantParams;
+import multiAgent.core.Environnement;
+import multiAgent.view.MainFrame;
+import multiAgent.wator.sma.SMA;
+import multiAgent.wator.sma.SMARandom;
+import multiAgent.wator.sma.SMASequential;
+import multiAgent.wator.sma.SMASequentialRandom;
 
 public class MainGUI {
 

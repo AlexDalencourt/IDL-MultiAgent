@@ -1,4 +1,4 @@
-package tp2.core;
+package multiAgent.core;
 
 import java.awt.Graphics;
 

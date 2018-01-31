@@ -1,4 +1,4 @@
-package tp2.wator.sma;
+package multiAgent.wator.sma;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,13 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import tp2.ConstantParams;
-import tp2.core.Agent;
-import tp2.core.Environnement;
-import tp2.core.SMAInterface;
-import tp2.wator.CommonAgentBehavour;
-import tp2.wator.Fish;
-import tp2.wator.Shark;
+import multiAgent.ConstantParams;
+import multiAgent.core.Agent;
+import multiAgent.core.Environnement;
+import multiAgent.core.SMAInterface;
+import multiAgent.wator.CommonAgentBehavour;
+import multiAgent.wator.Fish;
+import multiAgent.wator.Shark;
 
 public abstract class SMA implements SMAInterface {
 	

@@ -1,4 +1,4 @@
-package tp2;
+package multiAgent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,8 +22,8 @@ public class ConstantParams {
 	static {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Path to properties file");
-//		String path = scan.nextLine();
-		String path = "param1.properties";
+		String path = scan.nextLine();
+//		String path = "param1.properties";
 		scan.close();
 		props = new Properties();
 		try {

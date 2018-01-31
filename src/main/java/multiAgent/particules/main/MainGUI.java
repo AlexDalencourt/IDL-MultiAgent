@@ -1,12 +1,12 @@
-package tp2.particules.main;
+package multiAgent.particules.main;
 
-import tp2.ConstantParams;
-import tp2.core.Environnement;
-import tp2.particules.sma.SMA;
-import tp2.particules.sma.SMARandom;
-import tp2.particules.sma.SMASequential;
-import tp2.particules.sma.SMASequentialRandom;
-import tp2.view.MainFrame;
+import multiAgent.ConstantParams;
+import multiAgent.core.Environnement;
+import multiAgent.particules.sma.SMA;
+import multiAgent.particules.sma.SMARandom;
+import multiAgent.particules.sma.SMASequential;
+import multiAgent.particules.sma.SMASequentialRandom;
+import multiAgent.view.MainFrame;
 
 public class MainGUI {
 

@@ -1,6 +1,6 @@
-package tp2.particules.sma;
+package multiAgent.particules.sma;
 
-import tp2.ConstantParams;
+import multiAgent.ConstantParams;
 
 public class SMARandom extends SMA {
 	

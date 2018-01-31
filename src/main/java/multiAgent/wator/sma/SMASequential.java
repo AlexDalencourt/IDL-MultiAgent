@@ -1,4 +1,4 @@
-package tp2.wator.sma;
+package multiAgent.wator.sma;
 
 public class SMASequential extends SMA {
 	

@@ -1,10 +1,10 @@
-package tp2.particules.sma;
+package multiAgent.particules.sma;
 
-import tp2.ConstantParams;
-import tp2.core.Agent;
-import tp2.core.Environnement;
-import tp2.core.SMAInterface;
-import tp2.particules.Particule;
+import multiAgent.ConstantParams;
+import multiAgent.core.Agent;
+import multiAgent.core.Environnement;
+import multiAgent.core.SMAInterface;
+import multiAgent.particules.Particule;
 
 public abstract class SMA implements SMAInterface {
 //	protected final List<Agent> agentList = new ArrayList<>();

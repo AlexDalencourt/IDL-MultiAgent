@@ -1,12 +1,12 @@
-package tp2.view;
+package multiAgent.view;
 
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import tp2.ConstantParams;
-import tp2.core.Environnement;
+import multiAgent.ConstantParams;
+import multiAgent.core.Environnement;
 
 public class MainFrame extends JFrame {
 

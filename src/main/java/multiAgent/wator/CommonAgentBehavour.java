@@ -1,11 +1,11 @@
-package tp2.wator;
+package multiAgent.wator;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import tp2.ConstantParams;
-import tp2.core.Agent;
-import tp2.core.Environnement;
+import multiAgent.ConstantParams;
+import multiAgent.core.Agent;
+import multiAgent.core.Environnement;
 
 public abstract class CommonAgentBehavour extends Agent {
 	

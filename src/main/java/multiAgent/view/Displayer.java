@@ -1,4 +1,4 @@
-package tp2.view;
+package multiAgent.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,8 +8,8 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import tp2.ConstantParams;
-import tp2.core.Environnement;
+import multiAgent.ConstantParams;
+import multiAgent.core.Environnement;
 
 public class Displayer extends JPanel implements Observer {
 

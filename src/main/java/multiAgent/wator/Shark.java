@@ -1,11 +1,11 @@
-package tp2.wator;
+package multiAgent.wator;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import tp2.ConstantParams;
-import tp2.core.Environnement;
+import multiAgent.ConstantParams;
+import multiAgent.core.Environnement;
 
 public class Shark extends CommonAgentBehavour{
 
