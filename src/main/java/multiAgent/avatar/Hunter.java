@@ -67,6 +67,11 @@ public class Hunter extends CommonAgentBehavour implements KeyListener {
 	public int getNewPosY() {
 		return nextY;
 	}
+	
+	@Override
+	public void specialActionWhenErasedByAvatar() {
+		((SMA)env.getSMA()).endOfGame();
+	}
 
 	@Override
 	public void drawAgent(Graphics g) {

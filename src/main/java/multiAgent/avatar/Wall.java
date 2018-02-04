@@ -21,6 +21,11 @@ public class Wall extends CommonAgentBehavour {
 	public void update() {
 		
 	}
+	
+	@Override
+	public void specialActionWhenErasedByAvatar() {
+		
+	}
 
 	@Override
 	public void drawAgent(Graphics g) {

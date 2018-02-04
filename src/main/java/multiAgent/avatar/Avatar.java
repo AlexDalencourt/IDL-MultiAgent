@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import multiAgent.ConstantParams;
+import multiAgent.avatar.sma.SMA;
 import multiAgent.core.Agent;
 import multiAgent.core.Environnement;
 
@@ -50,6 +51,11 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			dirX = 0;
 			dirY = 0;
 			return;
+		}
+		if(targetCell != null) {
+			if(((SMA)env.getSMA()).isEndOfGame()) {
+				return;
+			}
 		}
 		posX  = futurX;
 		posY = futurY;
@@ -103,6 +109,10 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	public void drawAgent(Graphics g) {
 		g.setColor(Color.RED);
 		super.drawAgent(g);
+	}
+	
+	@Override
+	public void specialActionWhenErasedByAvatar() {
 	}
 
 	@Override

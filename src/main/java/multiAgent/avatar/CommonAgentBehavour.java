@@ -41,4 +41,9 @@ public abstract class CommonAgentBehavour extends Agent {
 		int pixelPosY = ConstantParams.getBoxSize() * posY;
 		g.fillRect(pixelPosX, pixelPosY, ConstantParams.getBoxSize(), ConstantParams.getBoxSize());
 	}
+
+	/**
+	 * Actions spécifique à réaliser pour l'agent quand un avatar veut venir sur sa cellule
+	 */
+	public abstract void specialActionWhenErasedByAvatar();
 }
