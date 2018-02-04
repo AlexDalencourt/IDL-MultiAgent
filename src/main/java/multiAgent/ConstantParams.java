@@ -77,6 +77,14 @@ public class ConstantParams {
 		return Integer.valueOf(props.getProperty("nb.hunter"));
 	}
 	
+	public static int getNumberOfWall() {
+		if(getTorus()){
+			return (getGridSizeX() * getGridSizeY()) * Integer.valueOf(props.getProperty("wall.percent")) / 100;
+		} else {
+			return ((getGridSizeX() - 2) * (getGridSizeY() - 2)) * Integer.valueOf(props.getProperty("wall.percent")) / 100;
+		}
+	}
+	
 	public static Random getRandom() {
 		return random;
 	}
@@ -132,4 +140,5 @@ public class ConstantParams {
 	public enum SMATypes {
 		SEQUENTIAL, SEQUENTIALRANDOM, ALLRANDOM
 	}
+
 }

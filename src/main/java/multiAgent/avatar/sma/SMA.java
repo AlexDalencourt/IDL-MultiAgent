@@ -13,6 +13,8 @@ public class SMA implements SMAInterface {
 	
 	private Agent[] agentList;
 	
+	private Avatar avatar;
+	
 	private MainFrame mainFrame;
 	
 	@Override
@@ -26,7 +28,11 @@ public class SMA implements SMAInterface {
 			new Wall(ConstantParams.getGridSizeX() - 1, i, env);
 		}
 		agentList = new Agent[ConstantParams.getNumberOfHunter() + 1];
-		agentList[0] = new Avatar(1, 1, env);
+		avatar = new Avatar(
+				ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX() - 2) + 1,
+				ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY() - 2) + 1,
+				env);
+		agentList[0] = avatar;
 		for(int i = 0; i < ConstantParams.getNumberOfHunter(); i++) {
 			int x,y;
 			do {
@@ -35,7 +41,30 @@ public class SMA implements SMAInterface {
 			}while(!env.isEmptyCellule(x, y) && getDijkstra()[x][y] == -1);
 			agentList[i + 1] = new Hunter(x, y, env);
 		}
-		mainFrame.addEventKeyListener((Avatar) agentList[0]);
+		for(int i = 0; i < ConstantParams.getNumberOfWall(); i++) {
+			for(int j = 0; j < 50; j++) {
+				int x,y;
+				x = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX());
+				y = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY());
+				if(env.isEmptyCellule(x, y)) {
+					boolean retry = false;
+					new Wall(x, y, env);
+					avatar.calculateDijkstra();
+					for(Agent agent : agentList) {
+						if(getDijkstra()[agent.getPosX()][agent.getNewPosY()] == -1) {
+							env.getEnvironnement()[x][y] = null;
+							retry = true;
+							break;
+						}
+					}
+					if(!retry) {
+						break;
+					}
+				}
+			}
+		}
+		avatar.calculateDijkstra();
+		mainFrame.addEventKeyListener(avatar);
 	}
 	
 	public void initAgent(Environnement env, MainFrame mainFrame) {
@@ -44,7 +73,7 @@ public class SMA implements SMAInterface {
 	}
 	
 	public int[][] getDijkstra() {
-		return ((Avatar)agentList[0]).getDijkstra();
+		return avatar.getDijkstra();
 	}
 
 	@Override

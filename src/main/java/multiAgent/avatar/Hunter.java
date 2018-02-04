@@ -2,7 +2,6 @@ package multiAgent.avatar;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Arrays;
 
 import multiAgent.ConstantParams;
 import multiAgent.avatar.sma.SMA;
@@ -10,23 +9,24 @@ import multiAgent.core.Environnement;
 
 public class Hunter extends CommonAgentBehavour {
 
+	private int nextX, nextY;
+
 	public Hunter(int posX, int posY, Environnement env) {
 		super(posX, posY, env);
+		nextX = posX; nextY = posY;
 	}
 
 	@Override
 	public boolean canGoOn() {
 		return true;
 	}
-
-	private int nextX, nextY;
 	
 	@Override
 	public void decide() {
 		int[][] dijkstra = ((SMA) env.getSMA()).getDijkstra();
 		int currMin = dijkstra[posX][posY];
 		for(int i = -1; i < 2; i++) {
-			for(int j = -1; j < 1; j++) {
+			for(int j = -1; j < 2; j++) {
 				if(dijkstra[posX + i][posY + j] != -1 
 						&& dijkstra[posX + i][posY + j] < currMin) {
 					nextX = posX + i;
@@ -62,5 +62,10 @@ public class Hunter extends CommonAgentBehavour {
 	public void drawAgent(Graphics g) {
 		g.setColor(Color.BLUE);
 		super.drawAgent(g);
+	}
+	
+	@Override
+	public String toString() {
+		return "Hunter;"+ (posX - nextX) +";" + (posY - nextY) + ";" + super.toString();
 	}
 }

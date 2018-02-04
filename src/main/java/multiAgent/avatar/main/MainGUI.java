@@ -19,6 +19,7 @@ public class MainGUI {
 			sma.initAgent(env, new MainFrame(env, displayer));
 			displayer.setDisjkstraIsCalculate(true);
 		}
+		env.updateDisplay();
 		Thread.sleep(ConstantParams.getDelay());
 		int tickNumber = 0;
 		while (true) {

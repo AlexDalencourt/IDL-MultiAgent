@@ -53,7 +53,7 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 		calculateDijkstra();
 	}
 
-	private void calculateDijkstra() {
+	public void calculateDijkstra() {
 		dijkstra = new int [ConstantParams.getGridSizeX()][ConstantParams.getGridSizeY()];
 		for(int i = 0; i < dijkstra.length; i++) {
 			for(int j = 0 ; j < dijkstra[i].length; j++) {
