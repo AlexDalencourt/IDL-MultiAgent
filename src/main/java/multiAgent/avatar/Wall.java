@@ -9,7 +9,7 @@ import multiAgent.core.Environnement;
 public class Wall extends CommonAgentBehavour {
 
 	public Wall(int posX, int posY, Environnement env) {
-		super(posX, posY, env);
+		super(posX, posY, env, 0);
 	}
 
 	@Override

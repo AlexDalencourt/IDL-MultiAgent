@@ -20,12 +20,15 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	private int[][] dijkstra;
 	
 	public Avatar(int posX, int posY, Environnement env) {
-		super(posX, posY, env);
+		super(posX, posY, env, ConstantParams.getAvatarSpeed());
 		calculateDijkstra();
 	}
 
 	@Override
 	public void decide() {
+		if(!canDecide()) {
+			return;
+		}
 		if(dirX == 0 && dirY == 0) {
 			return;
 		}

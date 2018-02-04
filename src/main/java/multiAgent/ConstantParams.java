@@ -49,6 +49,8 @@ public class ConstantParams {
 		}
 	}
 	
+	// Agent params
+	
 	public static int getNumberOfParticules() {
 		return Integer.valueOf(props.getProperty("nb.particles"));
 	}
@@ -84,6 +86,16 @@ public class ConstantParams {
 			return ((getGridSizeX() - 2) * (getGridSizeY() - 2)) * Integer.valueOf(props.getProperty("wall.percent")) / 100;
 		}
 	}
+	
+	public static int getHunterSpeed() {
+		return Integer.valueOf(props.getProperty("speed.hunter"));
+	}
+	
+	public static int getAvatarSpeed() {
+		return Integer.valueOf(props.getProperty("speed.avatar"));
+	}
+	
+	// Other params
 	
 	public static Random getRandom() {
 		return random;

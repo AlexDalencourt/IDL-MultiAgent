@@ -10,10 +10,19 @@ public abstract class CommonAgentBehavour extends Agent {
 	
 	protected static final int[][] enableMovement = new int[][] {{1,0},{0,1},{-1,0},{0,-1}};
 	
-	public CommonAgentBehavour(int posX, int posY, Environnement env) {
+	private int tick = 0;
+	
+	private int speed;
+	
+	public CommonAgentBehavour(int posX, int posY, Environnement env, int speed) {
 		super(posX, posY, env);
+		this.speed = speed;
 	}
 
+	protected boolean canDecide() {
+		return ++tick % speed == 0;
+	}
+	
 	public abstract boolean canGoOn();
 
 	@Override

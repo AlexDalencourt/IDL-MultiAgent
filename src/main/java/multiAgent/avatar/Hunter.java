@@ -12,7 +12,7 @@ public class Hunter extends CommonAgentBehavour {
 	private int nextX, nextY;
 
 	public Hunter(int posX, int posY, Environnement env) {
-		super(posX, posY, env);
+		super(posX, posY, env, ConstantParams.getHunterSpeed());
 		nextX = posX; nextY = posY;
 	}
 
@@ -23,6 +23,9 @@ public class Hunter extends CommonAgentBehavour {
 	
 	@Override
 	public void decide() {
+		if(!canDecide()) {
+			return;
+		}
 		int[][] dijkstra = ((SMA) env.getSMA()).getDijkstra();
 		int currMin = dijkstra[posX][posY];
 		int calculatePosX, calculatePosY;
