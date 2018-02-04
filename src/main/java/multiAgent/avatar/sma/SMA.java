@@ -14,6 +14,8 @@ import multiAgent.view.MainFrame;
 
 public class SMA implements SMAInterface, KeyListener{
 	
+	private Environnement env;
+	
 	private Agent[] agentList;
 	
 	private Avatar avatar;
@@ -24,7 +26,7 @@ public class SMA implements SMAInterface, KeyListener{
 	
 	@Override
 	public void initAgent(Environnement env) {
-		endOfGame = false;
+		this.env = env;
 		for(int i = 0; i < ConstantParams.getGridSizeX(); i++) {
 			new Wall(i, 0, env);
 			new Wall(i, ConstantParams.getGridSizeY() - 1, env);
@@ -74,6 +76,7 @@ public class SMA implements SMAInterface, KeyListener{
 	}
 	
 	public void initAgent(Environnement env, MainFrame mainFrame) {
+		this.endOfGame = false;
 		this.mainFrame = mainFrame;
 		this.initAgent(env);
 	}
@@ -118,8 +121,21 @@ public class SMA implements SMAInterface, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
-			endOfGame = !endOfGame;
+		switch(arg0.getKeyCode()) {
+		case KeyEvent.VK_SPACE:
+			synchronized(this){
+				endOfGame = !endOfGame;
+			}
+			break;
+		case KeyEvent.VK_I:
+			synchronized (this) {
+				endOfGame = true;
+				env.clean();
+				this.initAgent(this.env);
+				env.updateDisplay();
+			}
+			break;
+		default:;
 		}
 	}
 

@@ -87,4 +87,7 @@ public class Environnement extends Observable {
 		return this.sma;
 	}
 	
+	public void clean() {
+		this.environnement = new Agent[environnement.length][environnement[0].length];
+	}
 }
