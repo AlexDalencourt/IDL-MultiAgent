@@ -48,6 +48,9 @@ public class Hunter extends CommonAgentBehavour {
 	public void update() {
 		posX = nextX;
 		posY = nextY;
+		if(((SMA)env.getSMA()).getDijkstra()[posX][posY] == 0) {
+			((SMA)env.getSMA()).endOfGame();
+		}
 	}
 
 	@Override

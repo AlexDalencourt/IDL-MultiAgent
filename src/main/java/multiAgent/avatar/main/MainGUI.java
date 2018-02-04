@@ -12,21 +12,25 @@ public class MainGUI {
 		SMA sma = new SMA();
 		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
 			ConstantParams.getTorus(),sma);
+		MainFrame frame;
 		if(!ConstantParams.showGrid()) {
-			sma.initAgent(env, new MainFrame(env));
+			frame = new MainFrame(env);
+			sma.initAgent(env, frame);
 		}else {
 			AvatarDebugDisplayer displayer = new AvatarDebugDisplayer(env);
-			sma.initAgent(env, new MainFrame(env, displayer));
+			frame = new MainFrame(env, displayer);
+			sma.initAgent(env, frame);
 			displayer.setDisjkstraIsCalculate(true);
 		}
+		frame.addKeyListener(sma);
 		env.updateDisplay();
 		Thread.sleep(ConstantParams.getDelay());
-		int tickNumber = 0;
-		while (true) {
+		while(true) {
 			sma.run();
-			tickNumber++;
 			env.updateDisplay();
 			Thread.sleep(ConstantParams.getDelay());
+			while (sma.isEndOfGame()) {Thread.sleep(10);}
 		}
 	}
+
 }
