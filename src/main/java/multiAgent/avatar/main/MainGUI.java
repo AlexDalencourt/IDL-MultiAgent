@@ -26,7 +26,7 @@ public class MainGUI {
 		env.updateDisplay();
 		sma.endOfGame();
 		while(true) {
-			while (sma.isEndOfGame()) {Thread.sleep(10);}
+			while (sma.isEndOfGame() || sma.isPause()) {Thread.sleep(10);}
 			sma.run();
 			env.updateDisplay();
 			Thread.sleep(sma.getDelay());

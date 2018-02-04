@@ -24,10 +24,16 @@ public class SMA implements SMAInterface, KeyListener{
 
 	private boolean endOfGame;
 	
+	private boolean pause;
+	
+	private boolean init;
+	
 	private long delay = ConstantParams.getDelay();
 	
 	@Override
 	public void initAgent(Environnement env) {
+		init = true;
+		pause = false;
 		this.env = env;
 		for(int i = 0; i < ConstantParams.getGridSizeX(); i++) {
 			new Wall(i, 0, env);
@@ -120,6 +126,10 @@ public class SMA implements SMAInterface, KeyListener{
 		return endOfGame;
 	}
 
+	public boolean isPause() {
+		return pause;
+	}
+
 	public void endOfGame() {
 		endOfGame = true;
 	}
@@ -133,7 +143,13 @@ public class SMA implements SMAInterface, KeyListener{
 		switch(arg0.getKeyCode()) {
 		case KeyEvent.VK_SPACE:
 			synchronized(this){
-				endOfGame = !endOfGame;
+				pause = !pause;
+			}
+			break;
+		case KeyEvent.VK_S:
+			if(init) {
+				endOfGame = false;
+				init = false;
 			}
 			break;
 		case KeyEvent.VK_I:
