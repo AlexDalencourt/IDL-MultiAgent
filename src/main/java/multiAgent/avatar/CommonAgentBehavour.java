@@ -1,6 +1,5 @@
 package multiAgent.avatar;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import multiAgent.ConstantParams;
