@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import multiAgent.ConstantParams;
 import multiAgent.avatar.Avatar;
+import multiAgent.avatar.Defender;
 import multiAgent.avatar.Hunter;
 import multiAgent.avatar.Wall;
 import multiAgent.core.Agent;
@@ -101,18 +102,32 @@ public class SMA implements SMAInterface, KeyListener{
 		for(int i = 0; i < agentList.length; i++){
 			agentList[i].decide();
 		}
+		generateDefender();
+	}
+	
+	private int generatedDefender = 0;
+	
+	private void generateDefender() {
+		if(ConstantParams.getRandom().nextInt(100 / ConstantParams.getDefenderPopProbability()) == 0) {
+				int x,y,i = 0;
+			do {
+				x = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX());
+				y = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY());
+				if(++i > 50) {
+					return;
+				}
+			}while(!env.isEmptyCellule(x, y) && getDijkstra()[x][y] == -1);
+			env.addNewAgent(new Defender(x, y, env));
+			generatedDefender++;
+		}
 	}
 
 	@Override
 	public void addAgent(Agent agent) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void removeAgent(Agent agent) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

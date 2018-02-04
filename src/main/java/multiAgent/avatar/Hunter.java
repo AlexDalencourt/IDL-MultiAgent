@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 
 import multiAgent.ConstantParams;
 import multiAgent.avatar.sma.SMA;
+import multiAgent.core.Agent;
 import multiAgent.core.Environnement;
 
 public class Hunter extends CommonAgentBehavour implements KeyListener {
@@ -54,7 +55,7 @@ public class Hunter extends CommonAgentBehavour implements KeyListener {
 		posX = nextX;
 		posY = nextY;
 		if(((SMA)env.getSMA()).getDijkstra()[posX][posY] == 0) {
-			((SMA)env.getSMA()).endOfGame();
+			lost();
 		}
 	}
 
@@ -69,7 +70,11 @@ public class Hunter extends CommonAgentBehavour implements KeyListener {
 	}
 	
 	@Override
-	public void specialActionWhenErasedByAvatar() {
+	public void specialActionWhenErasedByAvatar(Agent agent) {
+		lost();
+	}
+	
+	private void lost() {
 		((SMA)env.getSMA()).endOfGame();
 	}
 

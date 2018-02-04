@@ -45,5 +45,5 @@ public abstract class CommonAgentBehavour extends Agent {
 	/**
 	 * Actions spécifique à réaliser pour l'agent quand un avatar veut venir sur sa cellule
 	 */
-	public abstract void specialActionWhenErasedByAvatar();
+	public abstract void specialActionWhenErasedByAvatar(Agent agent);
 }

@@ -20,9 +20,14 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	
 	private int[][] dijkstra;
 	
+	private boolean invisible;
+	
+	private int invisibleTimeLeft;
+	
 	public Avatar(int posX, int posY, Environnement env) {
 		super(posX, posY, env, ConstantParams.getAvatarSpeed());
 		calculateDijkstra();
+		invisible = false;
 	}
 
 	@Override
@@ -44,6 +49,12 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	
 	@Override
 	public void update() {
+		if(invisible) {
+			invisibleTimeLeft--;
+			if(invisibleTimeLeft == 0) {
+				invisible = false;
+			}
+		}
 		int futurX = posX + dirX;
 		int futurY = posY + dirY;
 		Agent targetCell = env.getCell(futurX, futurY);
@@ -53,6 +64,7 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			return;
 		}
 		if(targetCell != null) {
+			((CommonAgentBehavour)targetCell).specialActionWhenErasedByAvatar(this);
 			if(((SMA)env.getSMA()).isEndOfGame()) {
 				return;
 			}
@@ -64,6 +76,18 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	
 	public void calculateDijkstra() {
 		dijkstra = new int [ConstantParams.getGridSizeX()][ConstantParams.getGridSizeY()];
+		if(invisible) {
+			for(int i = 0; i < dijkstra.length; i++) {
+				for(int j = 0 ; j < dijkstra[i].length; j++) {
+					if(env.getCell(i, j) == null || ((CommonAgentBehavour)env.getCell(i, j)).canGoOn()) {
+						dijkstra[i][j] = 0;
+					} else {
+						dijkstra[i][j] = -1;
+					}
+				}
+			}
+			return;
+		}
 		for(int i = 0; i < dijkstra.length; i++) {
 			for(int j = 0 ; j < dijkstra[i].length; j++) {
 				dijkstra[i][j] = -1;
@@ -93,6 +117,11 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 		}
 	}
 	
+	public void setInivisible(int invisibleTime) {
+		invisible = true;
+		invisibleTimeLeft = invisibleTime;
+	}
+	
 	private long calculateCompressPosition(long paramX, long paramY) {
 		return (paramX << hexaShift) + paramY;
 	}
@@ -112,7 +141,7 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	}
 	
 	@Override
-	public void specialActionWhenErasedByAvatar() {
+	public void specialActionWhenErasedByAvatar(Agent agent) {
 	}
 
 	@Override

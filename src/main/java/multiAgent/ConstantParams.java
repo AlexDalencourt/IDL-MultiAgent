@@ -94,6 +94,18 @@ public class ConstantParams {
 	public static int getAvatarSpeed() {
 		return Integer.valueOf(props.getProperty("speed.avatar"));
 	}
+
+	public static int getAvatarInvisibleTime() {
+		return Integer.valueOf(props.getProperty("defender.life"));
+	}
+	
+	public static int getDefenderPopProbability() {
+		return Integer.valueOf(props.getProperty("defender.pop.probability"));
+	}
+	
+	public static int getDefenderVictoryPopLeft() {
+		return Integer.valueOf(props.getProperty("defender.victory.pop.left"));
+	}
 	
 	// Other params
 	

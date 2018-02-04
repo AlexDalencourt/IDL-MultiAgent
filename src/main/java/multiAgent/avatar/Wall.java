@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import multiAgent.ConstantParams;
+import multiAgent.core.Agent;
 import multiAgent.core.Environnement;
 
 public class Wall extends CommonAgentBehavour {
-
+	
 	public Wall(int posX, int posY, Environnement env) {
 		super(posX, posY, env, 0);
 	}
@@ -23,7 +24,7 @@ public class Wall extends CommonAgentBehavour {
 	}
 	
 	@Override
-	public void specialActionWhenErasedByAvatar() {
+	public void specialActionWhenErasedByAvatar(Agent agent) {
 		
 	}
 
