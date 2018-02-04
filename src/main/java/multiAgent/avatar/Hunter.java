@@ -25,19 +25,21 @@ public class Hunter extends CommonAgentBehavour {
 	public void decide() {
 		int[][] dijkstra = ((SMA) env.getSMA()).getDijkstra();
 		int currMin = dijkstra[posX][posY];
-		for(int i = -1; i < 2; i++) {
-			for(int j = -1; j < 2; j++) {
-				if(dijkstra[posX + i][posY + j] != -1 
-						&& dijkstra[posX + i][posY + j] < currMin) {
-					nextX = posX + i;
-					nextY = posY + j;
-					currMin = dijkstra[nextX][nextY];
-				}
+		int calculatePosX, calculatePosY;
+		for(int[] move : enableMovement) {
+			calculatePosX = posX + move[0];
+			calculatePosY = posY + move[1];
+			if(dijkstra[calculatePosX][calculatePosY] != -1 
+					&& dijkstra[calculatePosX][calculatePosY] < currMin) {
+				nextX = calculatePosX;
+				nextY = calculatePosY;
+				currMin = dijkstra[nextX][nextY];
 			}
 		}
-		while (nextX == posX && nextY == posY && dijkstra[nextX][nextY] == -1) {
-			nextX += ConstantParams.getRandom().nextInt(3) - 1;
-			nextY += ConstantParams.getRandom().nextInt(3) - 1;
+		while (dijkstra[nextX][nextY] == -1) {
+			int[] move = enableMovement[ConstantParams.getRandom().nextInt(enableMovement.length)];
+			nextX += move[0];
+			nextY += move[1];
 		}
 		env.applyTransition(this);
 	}

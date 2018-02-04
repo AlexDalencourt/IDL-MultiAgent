@@ -52,7 +52,7 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 		posY = futurY;
 		calculateDijkstra();
 	}
-
+	
 	public void calculateDijkstra() {
 		dijkstra = new int [ConstantParams.getGridSizeX()][ConstantParams.getGridSizeY()];
 		for(int i = 0; i < dijkstra.length; i++) {
@@ -71,16 +71,14 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			calculatePosX = uncompressPositionX(currentPosition);
 			calculatePosY = uncompressPositionY(currentPosition);
 			currentValue = dijkstra[calculatePosX][calculatePosY];
-			for(int i = -1; i < 2; i++) {
-				for(int j = -1; j < 2; j++) {
-					futureX = calculatePosX + i;
-					futureY = calculatePosY + j;
-					if(//env.checkOutOfBorders(calculatePosX + i, calculatePosY) &&
-							(env.getCell(futureX,futureY) == null || ((CommonAgentBehavour)env.getCell(futureX, futureY)).canGoOn()) 
-							&& dijkstra[futureX][futureY] == -1){
-						dijkstra[futureX][futureY] = currentValue + 1;
-						stack.add(calculateCompressPosition(futureX, futureY));
-					}
+			for(int[] move : enableMovement) {
+				futureX = calculatePosX + move[0];
+				futureY = calculatePosY + move[1];
+				if(//env.checkOutOfBorders(calculatePosX + i, calculatePosY) &&
+						(env.getCell(futureX,futureY) == null || ((CommonAgentBehavour)env.getCell(futureX, futureY)).canGoOn()) 
+						&& dijkstra[futureX][futureY] == -1){
+					dijkstra[futureX][futureY] = currentValue + 1;
+					stack.add(calculateCompressPosition(futureX, futureY));
 				}
 			}
 		}

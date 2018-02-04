@@ -8,6 +8,8 @@ import multiAgent.core.Environnement;
 
 public abstract class CommonAgentBehavour extends Agent {
 	
+	protected static final int[][] enableMovement = new int[][] {{1,0},{0,1},{-1,0},{0,-1}};
+	
 	public CommonAgentBehavour(int posX, int posY, Environnement env) {
 		super(posX, posY, env);
 	}
