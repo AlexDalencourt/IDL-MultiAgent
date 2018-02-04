@@ -21,6 +21,7 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	
 	public Avatar(int posX, int posY, Environnement env) {
 		super(posX, posY, env);
+		calculateDijkstra();
 	}
 
 	@Override
@@ -49,52 +50,58 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 		}
 		posX  = futurX;
 		posY = futurY;
-		recalculDijkstra();
+		calculateDijkstra();
 	}
 
-	private void recalculDijkstra() {
+	private void calculateDijkstra() {
 		dijkstra = new int [ConstantParams.getGridSizeX()][ConstantParams.getGridSizeY()];
-		long currPosition = (((long)posX) << hexaShift) + ((long)posY);
-		int currentValue = 0;
-		int calculatePosX;
-		int calculatePosY;
-		dijkstra[posX][posY] = -1;
-		for(int i = -1; i < 2; i++) {
-			for(int j = -1; j < 2; j++) {
-				calculatePosX = posX + i;
-				calculatePosY = posY + i;
-				if(//env.checkOutOfBorders(calculatePosX, calculatePosY) && 
-						((CommonAgentBehavour)env.getCell(calculatePosX, calculatePosY)).canGoOn()) {
-					stack.add((long) ((calculatePosX << hexaShift) + calculatePosY));
-					dijkstra[calculatePosX][calculatePosY] = 1;
-				}
+		for(int i = 0; i < dijkstra.length; i++) {
+			for(int j = 0 ; j < dijkstra[i].length; j++) {
+				dijkstra[i][j] = -1;
 			}
 		}
+		long currentPosition = calculateCompressPosition(posX, posY);
+		int currentValue = 0;
+		int calculatePosX, calculatePosY;
+		int futureX, futureY;
+		dijkstra[posX][posY] = 0;
+		stack.add(currentPosition);
 		while(!stack.isEmpty()) {
-			currPosition = stack.remove(0);
-			calculatePosX = (int)(currPosition >> hexaShift);
-			calculatePosY = (int)(currPosition & binaryMask);
+			currentPosition = stack.remove(0);
+			calculatePosX = uncompressPositionX(currentPosition);
+			calculatePosY = uncompressPositionY(currentPosition);
 			currentValue = dijkstra[calculatePosX][calculatePosY];
 			for(int i = -1; i < 2; i++) {
 				for(int j = -1; j < 2; j++) {
+					futureX = calculatePosX + i;
+					futureY = calculatePosY + j;
 					if(//env.checkOutOfBorders(calculatePosX + i, calculatePosY) &&
-							((CommonAgentBehavour)env.getCell(calculatePosX + i, calculatePosY + j)).canGoOn() &&
-							dijkstra[calculatePosX + i][calculatePosY + j] > currentValue + 1){
-						dijkstra[calculatePosX + i][calculatePosY + j] = currentValue + 1;
+							(env.getCell(futureX,futureY) == null || ((CommonAgentBehavour)env.getCell(futureX, futureY)).canGoOn()) 
+							&& dijkstra[futureX][futureY] == -1){
+						dijkstra[futureX][futureY] = currentValue + 1;
+						stack.add(calculateCompressPosition(futureX, futureY));
 					}
-					
-					//Stack new pos
 				}
 			}
 		}
 	}
+	
+	private long calculateCompressPosition(long paramX, long paramY) {
+		return (paramX << hexaShift) + paramY;
+	}
 
+	private int uncompressPositionX(long compression) {
+		return (int) (compression >> hexaShift);
+	}
+	
+	private int uncompressPositionY(long compression) {
+		return (int)(compression & binaryMask);
+	}
+	
 	@Override
 	public void drawAgent(Graphics g) {
-		int pixelPosX = ConstantParams.getBoxSize() * posX;
-		int pixelPosY = ConstantParams.getBoxSize() * posY;
 		g.setColor(Color.RED);
-		g.fillRect(pixelPosX, pixelPosY, ConstantParams.getBoxSize(), ConstantParams.getBoxSize());
+		super.drawAgent(g);
 	}
 
 	@Override
@@ -146,5 +153,9 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	@Override
 	public String toString() {
 		return "Avatar;" + dirX + ";" + dirY + ";" + super.toString();
+	}
+
+	public int[][] getDijkstra() {
+		return this.dijkstra;
 	}
 }
