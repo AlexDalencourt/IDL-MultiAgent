@@ -2,12 +2,14 @@ package multiAgent.avatar;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import multiAgent.ConstantParams;
 import multiAgent.avatar.sma.SMA;
 import multiAgent.core.Environnement;
 
-public class Hunter extends CommonAgentBehavour {
+public class Hunter extends CommonAgentBehavour implements KeyListener {
 
 	private int nextX, nextY;
 
@@ -75,5 +77,29 @@ public class Hunter extends CommonAgentBehavour {
 	@Override
 	public String toString() {
 		return "Hunter;"+ (posX - nextX) +";" + (posY - nextY) + ";" + super.toString();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		switch (arg0.getKeyCode()) {
+		case KeyEvent.VK_P:
+			increaseSpeed();
+			break;
+		case KeyEvent.VK_O:
+			decreaseSpeed();
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
 	}
 }

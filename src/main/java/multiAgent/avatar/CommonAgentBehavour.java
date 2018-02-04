@@ -22,6 +22,16 @@ public abstract class CommonAgentBehavour extends Agent {
 	protected boolean canDecide() {
 		return ++tick % speed == 0;
 	}
+
+	protected void decreaseSpeed() {
+		if(speed > 1) {
+			speed--;
+		}
+	}
+
+	protected void increaseSpeed() {
+		speed++;
+	}
 	
 	public abstract boolean canGoOn();
 

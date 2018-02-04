@@ -24,12 +24,12 @@ public class MainGUI {
 		}
 		frame.addKeyListener(sma);
 		env.updateDisplay();
-		Thread.sleep(ConstantParams.getDelay());
+		sma.endOfGame();
 		while(true) {
+			while (sma.isEndOfGame()) {Thread.sleep(10);}
 			sma.run();
 			env.updateDisplay();
-			Thread.sleep(ConstantParams.getDelay());
-			while (sma.isEndOfGame()) {Thread.sleep(10);}
+			Thread.sleep(sma.getDelay());
 		}
 	}
 

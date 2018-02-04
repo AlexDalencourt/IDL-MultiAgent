@@ -24,6 +24,8 @@ public class SMA implements SMAInterface, KeyListener{
 
 	private boolean endOfGame;
 	
+	private long delay = ConstantParams.getDelay();
+	
 	@Override
 	public void initAgent(Environnement env) {
 		this.env = env;
@@ -42,12 +44,15 @@ public class SMA implements SMAInterface, KeyListener{
 				env);
 		agentList[0] = avatar;
 		for(int i = 0; i < ConstantParams.getNumberOfHunter(); i++) {
+			Hunter hunter;
 			int x,y;
 			do {
 				x = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX());
 				y = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY());
 			}while(!env.isEmptyCellule(x, y) && getDijkstra()[x][y] == -1);
-			agentList[i + 1] = new Hunter(x, y, env);
+			hunter = new Hunter(x, y, env);
+			agentList[i + 1] = hunter;
+			mainFrame.addKeyListener(hunter);
 		}
 		for(int i = 0; i < ConstantParams.getNumberOfWall(); i++) {
 			for(int j = 0; j < 50; j++) {
@@ -118,6 +123,10 @@ public class SMA implements SMAInterface, KeyListener{
 	public void endOfGame() {
 		endOfGame = true;
 	}
+	
+	public long getDelay() {
+		return delay;
+	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -135,7 +144,7 @@ public class SMA implements SMAInterface, KeyListener{
 				env.updateDisplay();
 			}
 			break;
-		default:;
+		default: break;
 		}
 	}
 

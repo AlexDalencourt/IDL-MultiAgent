@@ -143,7 +143,13 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			dirY = 0;
 			dirX = 1;
 			break;
-		default:;
+		case KeyEvent.VK_Z:
+			increaseSpeed();
+			break;
+		case KeyEvent.VK_A:
+			decreaseSpeed();
+			break;
+		default: break;
 		}
 	}
 
