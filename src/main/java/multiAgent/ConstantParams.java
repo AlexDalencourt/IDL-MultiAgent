@@ -73,6 +73,10 @@ public class ConstantParams {
 		return Integer.valueOf(props.getProperty("nb.fishes"));
 	}
 	
+	public static int getNumberOfHunter() {
+		return Integer.valueOf(props.getProperty("nb.hunter"));
+	}
+	
 	public static Random getRandom() {
 		return random;
 	}
