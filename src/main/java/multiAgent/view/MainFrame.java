@@ -20,22 +20,28 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame (Environnement env) {
 		this.env = env;
+		displayer = new Displayer(env);
+
+		init();
+	}
+	
+	public MainFrame (Environnement env, Displayer displayer) {
+		this.env = env;
+		this.displayer = displayer;
 		
 		init();
-		
-		setVisible(true);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void init() {
 		// 15 est la large ou hauteur en fonction de l'axe de l'ascenseur
 		int sizeX = ConstantParams.getCanvasSizeX() + 15;
 		int sizeY = ConstantParams.getCanvasSizeY() + 15;
-		displayer = new Displayer(env);
 		JScrollPane scrollPanel = new JScrollPane(displayer);
 		setContentPane(scrollPanel);
 		this.setSize(new Dimension(sizeX,sizeY));
+		
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void addEventKeyListener (KeyListener listener) {

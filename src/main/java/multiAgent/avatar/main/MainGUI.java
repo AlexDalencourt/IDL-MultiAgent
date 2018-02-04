@@ -3,6 +3,7 @@ package multiAgent.avatar.main;
 import multiAgent.ConstantParams;
 import multiAgent.avatar.sma.SMA;
 import multiAgent.core.Environnement;
+import multiAgent.view.AvatarDebugDisplayer;
 import multiAgent.view.MainFrame;
 
 public class MainGUI {
@@ -11,13 +12,17 @@ public class MainGUI {
 		SMA sma = new SMA();
 		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
 			ConstantParams.getTorus(),sma);
-		sma.initAgent(env, new MainFrame(env));
-
+		if(!ConstantParams.showGrid()) {
+			sma.initAgent(env, new MainFrame(env));
+		}else {
+			AvatarDebugDisplayer displayer = new AvatarDebugDisplayer(env);
+			sma.initAgent(env, new MainFrame(env, displayer));
+			displayer.setDisjkstraIsCalculate(true);
+		}
 		Thread.sleep(ConstantParams.getDelay());
 		int tickNumber = 0;
 		while (true) {
 			sma.run();
-			sma.log();
 			tickNumber++;
 			env.updateDisplay();
 			Thread.sleep(ConstantParams.getDelay());

@@ -83,4 +83,8 @@ public class Environnement extends Observable {
 		return background;
 	}
 	
+	public SMAInterface getSMA() {
+		return this.sma;
+	}
+	
 }
