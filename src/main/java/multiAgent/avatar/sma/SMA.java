@@ -144,6 +144,14 @@ public class SMA implements SMAInterface, KeyListener{
 				env.updateDisplay();
 			}
 			break;
+		case KeyEvent.VK_W:
+			if(delay > 100) {
+				delay -= 100;
+			}
+			break;
+		case KeyEvent.VK_X:
+			delay += 100;
+			break;
 		default: break;
 		}
 	}
