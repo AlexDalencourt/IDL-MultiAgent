@@ -42,10 +42,10 @@ public class Hunter extends CommonAgentBehavour implements KeyListener {
 				currMin = dijkstra[nextX][nextY];
 			}
 		}
-		while (dijkstra[nextX][nextY] == -1) {
+		while (dijkstra[nextX][nextY] == -1 || (nextX == posX && nextY == posY)) {
 			int[] move = enableMovement[ConstantParams.getRandom().nextInt(enableMovement.length)];
-			nextX += move[0];
-			nextY += move[1];
+			nextX = posX + move[0];
+			nextY = posY + move[1];
 		}
 		env.applyTransition(this);
 	}
@@ -71,11 +71,12 @@ public class Hunter extends CommonAgentBehavour implements KeyListener {
 	
 	@Override
 	public void specialActionWhenErasedByAvatar(Agent agent) {
+		env.getEnvironnement()[agent.getPosX()][agent.getPosY()] = null;
 		lost();
 	}
 	
 	private void lost() {
-		((SMA)env.getSMA()).endOfGame();
+		((SMA)env.getSMA()).lost();
 	}
 
 	@Override

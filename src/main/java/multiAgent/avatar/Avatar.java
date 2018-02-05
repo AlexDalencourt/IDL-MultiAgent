@@ -63,14 +63,14 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			dirY = 0;
 			return;
 		}
+		posX  = futurX;
+		posY = futurY;
 		if(targetCell != null) {
 			((CommonAgentBehavour)targetCell).specialActionWhenErasedByAvatar(this);
 			if(((SMA)env.getSMA()).isEndOfGame()) {
 				return;
 			}
 		}
-		posX  = futurX;
-		posY = futurY;
 		calculateDijkstra();
 	}
 	
@@ -80,7 +80,7 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			for(int i = 0; i < dijkstra.length; i++) {
 				for(int j = 0 ; j < dijkstra[i].length; j++) {
 					if(env.getCell(i, j) == null || ((CommonAgentBehavour)env.getCell(i, j)).canGoOn()) {
-						dijkstra[i][j] = 0;
+						dijkstra[i][j] = 1;
 					} else {
 						dijkstra[i][j] = -1;
 					}
