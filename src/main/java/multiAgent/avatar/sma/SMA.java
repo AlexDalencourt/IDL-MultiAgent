@@ -29,7 +29,7 @@ public class SMA implements SMAInterface, KeyListener {
 	private boolean pause;
 
 	private boolean init;
-	
+
 	private boolean victory;
 
 	private long delay = ConstantParams.getDelay();
@@ -39,13 +39,15 @@ public class SMA implements SMAInterface, KeyListener {
 		init = true;
 		pause = false;
 		this.env = env;
-		for (int i = 0; i < ConstantParams.getGridSizeX(); i++) {
-			new Wall(i, 0, env);
-			new Wall(i, ConstantParams.getGridSizeY() - 1, env);
-		}
-		for (int i = 0; i < ConstantParams.getGridSizeY(); i++) {
-			new Wall(0, i, env);
-			new Wall(ConstantParams.getGridSizeX() - 1, i, env);
+		if (!ConstantParams.getTorus()) {
+			for (int i = 0; i < ConstantParams.getGridSizeX(); i++) {
+				new Wall(i, 0, env);
+				new Wall(i, ConstantParams.getGridSizeY() - 1, env);
+			}
+			for (int i = 0; i < ConstantParams.getGridSizeY(); i++) {
+				new Wall(0, i, env);
+				new Wall(ConstantParams.getGridSizeX() - 1, i, env);
+			}
 		}
 		agentList = new Agent[ConstantParams.getNumberOfHunter() + 1];
 		avatar = new Avatar(ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX() - 2) + 1,
@@ -102,7 +104,7 @@ public class SMA implements SMAInterface, KeyListener {
 	public void run() {
 		for (int i = 0; i < agentList.length; i++) {
 			agentList[i].decide();
-			if(endOfGame) {
+			if (endOfGame) {
 				refreshEnv();
 				return;
 			}
@@ -122,7 +124,7 @@ public class SMA implements SMAInterface, KeyListener {
 				if (++i > 50) {
 					return;
 				}
-			} while (!env.isEmptyCellule(x, y) && getDijkstra()[x][y] == -1);
+			} while (!env.isEmptyCellule(x, y) || getDijkstra()[x][y] == -1);
 			env.addNewAgent(new Defender(x, y, env));
 			generatedDefender++;
 		}
@@ -137,7 +139,7 @@ public class SMA implements SMAInterface, KeyListener {
 				if (++i > 50) {
 					return;
 				}
-			} while (!env.isEmptyCellule(x, y) && getDijkstra()[x][y] == -1);
+			} while (!env.isEmptyCellule(x, y) || getDijkstra()[x][y] == -1);
 			env.addNewAgent(new Victory(x, y, env));
 			generatedDefender = 0;
 		}
@@ -147,27 +149,27 @@ public class SMA implements SMAInterface, KeyListener {
 		victory = false;
 		endOfGame();
 	}
-	
+
 	public void win() {
 		victory = true;
 		env.updateDisplay();
 		endOfGame();
 	}
-	
+
 	private void refreshEnv() {
-		if(!victory) {
+		if (!victory) {
 			env.getEnvironnement()[agentList[0].getPosX()][agentList[0].getPosY()] = null;
-			for(int i = 1; i < agentList.length; i++) {
-				env.getEnvironnement()[agentList[i].getPosX()][agentList[i].getPosY()] = agentList[i];	
+			for (int i = 1; i < agentList.length; i++) {
+				env.getEnvironnement()[agentList[i].getPosX()][agentList[i].getPosY()] = agentList[i];
 			}
-		}else {
+		} else {
 			env.getEnvironnement()[avatar.getPosX()][avatar.getPosY()] = avatar;
-			for(int i = 1; i < agentList.length; i++) {
-				env.getEnvironnement()[agentList[i].getPosX()][agentList[i].getPosY()] = null;	
+			for (int i = 1; i < agentList.length; i++) {
+				env.getEnvironnement()[agentList[i].getPosX()][agentList[i].getPosY()] = null;
 			}
 		}
 	}
-	
+
 	@Override
 	public void addAgent(Agent agent) {
 	}
@@ -182,7 +184,7 @@ public class SMA implements SMAInterface, KeyListener {
 			System.out.println(agentList[i]);
 		}
 	}
-	
+
 	public boolean isEndOfGame() {
 		return endOfGame;
 	}

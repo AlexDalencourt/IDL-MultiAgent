@@ -33,8 +33,8 @@ public class Hunter extends CommonAgentBehavour implements KeyListener {
 		int currMin = dijkstra[posX][posY];
 		int calculatePosX, calculatePosY;
 		for(int[] move : enableMovement) {
-			calculatePosX = posX + move[0];
-			calculatePosY = posY + move[1];
+			calculatePosX = env.calculateTorus(posX + move[0], ConstantParams.getGridSizeX());
+			calculatePosY = env.calculateTorus(posY + move[1], ConstantParams.getGridSizeY());
 			if(dijkstra[calculatePosX][calculatePosY] != -1 
 					&& dijkstra[calculatePosX][calculatePosY] < currMin) {
 				nextX = calculatePosX;

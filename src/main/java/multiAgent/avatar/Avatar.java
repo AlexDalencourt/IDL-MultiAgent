@@ -55,8 +55,8 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 				invisible = false;
 			}
 		}
-		int futurX = posX + dirX;
-		int futurY = posY + dirY;
+		int futurX = env.calculateTorus(posX + dirX, ConstantParams.getGridSizeX());
+		int futurY = env.calculateTorus(posY + dirY, ConstantParams.getGridSizeY());
 		Agent targetCell = env.getCell(futurX, futurY);
 		if(targetCell != null && !((CommonAgentBehavour) targetCell).canGoOn()) {
 			dirX = 0;
@@ -105,10 +105,9 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 			calculatePosY = uncompressPositionY(currentPosition);
 			currentValue = dijkstra[calculatePosX][calculatePosY];
 			for(int[] move : enableMovement) {
-				futureX = calculatePosX + move[0];
-				futureY = calculatePosY + move[1];
-				if(//env.checkOutOfBorders(calculatePosX + i, calculatePosY) &&
-						(env.getCell(futureX,futureY) == null || ((CommonAgentBehavour)env.getCell(futureX, futureY)).canGoOn()) 
+				futureX = env.calculateTorus(calculatePosX + move[0], ConstantParams.getGridSizeX());
+				futureY = env.calculateTorus(calculatePosY + move[1], ConstantParams.getGridSizeY());
+				if((env.getCell(futureX,futureY) == null || ((CommonAgentBehavour)env.getCell(futureX, futureY)).canGoOn()) 
 						&& dijkstra[futureX][futureY] == -1){
 					dijkstra[futureX][futureY] = currentValue + 1;
 					stack.add(calculateCompressPosition(futureX, futureY));
