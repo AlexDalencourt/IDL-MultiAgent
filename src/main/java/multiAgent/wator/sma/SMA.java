@@ -15,6 +15,7 @@ import multiAgent.core.SMAInterface;
 import multiAgent.wator.CommonAgentBehavour;
 import multiAgent.wator.Fish;
 import multiAgent.wator.Shark;
+import multiAgent.wator.Shark2;
 
 public abstract class SMA implements SMAInterface {
 	
@@ -55,6 +56,37 @@ public abstract class SMA implements SMAInterface {
 			}
 			
 		}
+	}
+
+	public void initAgent2(Environnement env) {
+		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberInitialOfFishes()+ConstantParams.getNumberInitialOfSharks()) {
+			throw new IllegalArgumentException("Nombre de particules supérieur au nombre de cases du tableau");
+		}
+		for(int i = 0; i < ConstantParams.getNumberInitialOfSharks(); i++) {
+			int x,y;
+			do {
+				x = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX());
+				y = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY());
+			}while(!env.isEmptyCellule(x, y));
+			agentList.add(new Shark2(x, y, env));
+		}
+		for(int i = 0; i < ConstantParams.getNumberInitialOfFishes(); i++) {
+			int x,y;
+			do {
+				x = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX());
+				y = ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY());
+			}while(!env.isEmptyCellule(x, y));
+			agentList.add(new Fish(x, y, env));
+		}
+		if(ConstantParams.showTrace()) {
+			try {
+				logfile = new PrintWriter(new FileWriter("log-wator.txt"));
+				logfile.println("Agent type;Starve time;Breed time;Agent color;Age;Positon X; Position Y");
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			
+		}	
 	}
 	
 	@Override
