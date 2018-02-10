@@ -51,6 +51,27 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>Particules-2</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>Particules-Behavour-2</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<archive>
+								<manifest>
+									<mainClass>
+										multiAgent.particules.main.MainGUI2
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+					<execution>
 						<id>Wator-1</id>
 						<phase>package</phase>
 						<goals>
@@ -72,6 +93,27 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>Wator-2</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>Wator-Behavour-2</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<archive>
+								<manifest>
+									<mainClass>
+										multiAgent.wator.main.MainGUI2
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+					<execution>
 						<id>Avatar-1</id>
 						<phase>package</phase>
 						<goals>
@@ -84,6 +126,27 @@
 								<manifest>
 									<mainClass>
 										multiAgent.avatar.main.MainGUI
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Avatar-2</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>Avatar-Behavour-2</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<archive>
+								<manifest>
+									<mainClass>
+										multiAgent.avatar.main.MainGUI2
 									</mainClass>
 								</manifest>
 							</archive>

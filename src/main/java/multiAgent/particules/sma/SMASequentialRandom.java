@@ -1,21 +1,20 @@
 package multiAgent.particules.sma;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import multiAgent.ConstantParams;
+import multiAgent.core.Agent;
 
 public class SMASequentialRandom extends SMA{
 
 	@Override
 	public void run() {
-		List<Integer> enableAgent = new ArrayList<>();
-		for(int i = 0; i < agentList.length; i++) {
-			enableAgent.add(i);
-		}
-		while(enableAgent.size() > 0) {
-			int idAgent = enableAgent.remove((ConstantParams.getRandom().nextInt(enableAgent.size())));
-			agentList[idAgent].decide();
+		List<Agent> agents = Arrays.asList(agentList);
+		Collections.shuffle(agents, ConstantParams.getRandom());
+		for(Agent agent : agents) {
+			agent.decide();
 		}
 	}
 

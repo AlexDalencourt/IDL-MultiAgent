@@ -13,13 +13,13 @@ import multiAgent.particules.sma.SMASequential;
 import multiAgent.particules.sma.SMASequentialRandom;
 import multiAgent.view.MainFrame;
 
-public class MainGUI {
+public class MainGUI2 {
 
 	public static void main(String[] args) throws InterruptedException {
 		SMA sma = initSMA();
 		Environnement env = new Environnement(ConstantParams.getGridSizeX(), ConstantParams.getGridSizeY(),
 				ConstantParams.getTorus(), sma);
-		sma.initAgent(env);
+		sma.initAgent2(env);
 
 		new MainFrame(env);
 		Thread.sleep(ConstantParams.getDelay());
@@ -48,15 +48,15 @@ public class MainGUI {
 			return new SMASequential();
 		}
 	}
-
+	
 	private static PrintWriter logger;
 	
 	public static PrintWriter getOutputStream() {
 		if(logger == null) {
 			try {
-				logger = new PrintWriter(new FileWriter(new File("Log-Particules-V1.log")));
-			}catch(IOException e) {
-				throw new RuntimeException("Impossible d'ouvrir un logger");
+				logger = new PrintWriter(new FileWriter(new File("Log-Particules-V2.log")));
+			} catch (IOException e) {
+				throw new RuntimeException("Impossible d'ouvrir un nouveau Logger");
 			}
 		}
 		return logger;

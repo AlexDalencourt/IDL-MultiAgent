@@ -2,10 +2,12 @@ package multiAgent.particules;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.IOException;
 
 import multiAgent.ConstantParams;
 import multiAgent.core.Agent;
 import multiAgent.core.Environnement;
+import multiAgent.particules.main.MainGUI;
 
 public class Particule extends Agent {
 
@@ -17,6 +19,8 @@ public class Particule extends Agent {
 	
 	private boolean collision;
 
+	private int tick;
+	
 	public Particule(int id, int posX, int posY, int pasX, int pasY, Environnement env) {
 		super(posX,posY,env);
 		this.id = id;
@@ -27,19 +31,21 @@ public class Particule extends Agent {
 
 	@Override
 	public void decide() {
-		boolean invertScale = false;
-		if(env.checkOutOfBorders(getNewPosX(), getNewPosY())) {
-//			Logger.log(String.format("Agent %s out of board on position: [%s,%s] calculate with pas : [%s,%s]", id, getNewPosX(), getNewPosY(), pasX, pasY));
-			invertScale = true;
-		} else if (!env.isEmptyCellule(getNewPosX(), getNewPosY())) {
-//			Logger.log(String.format("Agent %s collision detect or out of board on position : [%s,%s] calculate with pas : [%s,%s]", id, getNewPosX(), getNewPosY(), pasX, pasY));
-			invertScale = true;
-		}
-		if(invertScale) {
+		tick++;
+		if(env.checkOutOfBorders(getNewPosX(), getNewPosY()) || !env.isEmptyCellule(getNewPosX(), getNewPosY())) {
 			pasX *= -1;
 			pasY *= -1;
 			collision = true;
-		} else {
+			if(ConstantParams.showTrace()) {
+				MainGUI.getOutputStream().println(this.toString());
+			}
+			if(env.checkOutOfBorders(getNewPosX(), getNewPosY()) || !env.isEmptyCellule(getNewPosX(), getNewPosY())) {
+				pasX *= -1;
+				pasY *= -1;
+			} else {
+				env.applyTransition(this);
+			}
+		}else {
 			env.applyTransition(this);
 		}
 	}
@@ -80,6 +86,6 @@ public class Particule extends Agent {
 	
 	@Override
 	public String toString() {
-		return String.format("Agent id : %s , Position : [%s,%s], Pas : [%s,%s], Collision %s", id, posX, posY, pasX, pasY, collision);
+		return tick + ";" + super.toString();
 	}
 }
