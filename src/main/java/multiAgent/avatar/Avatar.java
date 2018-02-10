@@ -23,6 +23,12 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 	private boolean invisible;
 	
 	private int invisibleTimeLeft;
+
+	private List<Long> stack = new ArrayList<>();
+
+	private static final int binaryMask = 0b11111111111111111111;
+	
+	private static final int hexaShift = 0x34;
 	
 	public Avatar(int posX, int posY, Environnement env) {
 		super(posX, posY, env, ConstantParams.getAvatarSpeed());
@@ -40,12 +46,6 @@ public class Avatar extends CommonAgentBehavour implements KeyListener {
 		}
 		env.applyTransition(this);
 	}
-
-	private List<Long> stack = new ArrayList<>();
-
-	private static final int binaryMask = 0b11111111111111111111;
-	
-	private static final int hexaShift = 0x34;
 	
 	@Override
 	public void update() {

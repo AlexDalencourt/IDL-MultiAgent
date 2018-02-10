@@ -8,7 +8,7 @@ import multiAgent.core.Environnement;
 
 public abstract class CommonAgentBehavour extends Agent {
 	
-	protected static final int[][] enableMovement = new int[][] {{1,0},{0,1},{-1,0},{0,-1}};
+	public static final int[][] enableMovement = new int[][] {{1,0},{0,1},{-1,0},{0,-1}};
 	
 	private int tick = 0;
 	

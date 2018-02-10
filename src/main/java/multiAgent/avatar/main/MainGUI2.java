@@ -6,7 +6,7 @@ import multiAgent.core.Environnement;
 import multiAgent.view.AvatarDebugDisplayer;
 import multiAgent.view.MainFrame;
 
-public class MainGUI {
+public class MainGUI2 {
 
 	public static void main(String[] args) throws InterruptedException {
 		SMA sma = new SMA();
@@ -15,11 +15,11 @@ public class MainGUI {
 		MainFrame frame;
 		if(!ConstantParams.showGrid()) {
 			frame = new MainFrame(env);
-			sma.initAgent(env, frame, 1);
+			sma.initAgent(env, frame, 2);
 		}else {
 			AvatarDebugDisplayer displayer = new AvatarDebugDisplayer(env);
 			frame = new MainFrame(env, displayer);
-			sma.initAgent(env, frame, 1);
+			sma.initAgent(env, frame, 2);
 			displayer.setDisjkstraIsCalculate(true);
 		}
 		frame.addKeyListener(sma);

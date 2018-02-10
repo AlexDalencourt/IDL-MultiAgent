@@ -2,9 +2,14 @@ package multiAgent.avatar.sma;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import multiAgent.ConstantParams;
 import multiAgent.avatar.Avatar;
+import multiAgent.avatar.CommonAgentBehavour;
 import multiAgent.avatar.Defender;
 import multiAgent.avatar.Hunter;
 import multiAgent.avatar.Victory;
@@ -34,6 +39,8 @@ public class SMA implements SMAInterface, KeyListener {
 
 	private long delay = ConstantParams.getDelay();
 
+	private int version = 1;
+
 	@Override
 	public void initAgent(Environnement env) {
 		init = true;
@@ -50,6 +57,14 @@ public class SMA implements SMAInterface, KeyListener {
 			}
 		}
 		agentList = new Agent[ConstantParams.getNumberOfHunter() + 1];
+		if (version == 1) {
+			initAgentV1();
+		} else {
+			initAgentV2();
+		}
+	}
+
+	private void initAgentV1() {
 		avatar = new Avatar(ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeX() - 2) + 1,
 				ConstantParams.getRandom().nextInt(ConstantParams.getGridSizeY() - 2) + 1, env);
 		agentList[0] = avatar;
@@ -64,6 +79,32 @@ public class SMA implements SMAInterface, KeyListener {
 			agentList[i + 1] = hunter;
 			mainFrame.addKeyListener(hunter);
 		}
+		labyrinthGeneratorV1(env);
+		avatar.calculateDijkstra();
+		mainFrame.addEventKeyListener(avatar);
+	}
+
+	private void initAgentV2() {
+		List<int[]> freeCell = labyrinthGeneratorV2(env);
+		if (freeCell.size() < agentList.length) {
+			throw new RuntimeException("To much walls");
+		}
+		Collections.shuffle(freeCell, ConstantParams.getRandom());
+		int[] cell = freeCell.remove(0);
+		avatar = new Avatar(cell[0], cell[1], env);
+		mainFrame.addKeyListener(avatar);
+		agentList[0] = avatar;
+		Hunter hunter;
+		for (int i = 1; i < agentList.length; i++) {
+			cell = freeCell.remove(0);
+			hunter = new Hunter(cell[0], cell[1], env);
+			mainFrame.addEventKeyListener(hunter);
+			agentList[i] = hunter;
+		}
+		avatar.calculateDijkstra();
+	}
+
+	private void labyrinthGeneratorV1(Environnement env) {
 		for (int i = 0; i < ConstantParams.getNumberOfWall(); i++) {
 			for (int j = 0; j < 50; j++) {
 				int x, y;
@@ -86,13 +127,50 @@ public class SMA implements SMAInterface, KeyListener {
 				}
 			}
 		}
-		avatar.calculateDijkstra();
-		mainFrame.addEventKeyListener(avatar);
 	}
 
-	public void initAgent(Environnement env, MainFrame mainFrame) {
+	private List<int[]> labyrinthGeneratorV2(Environnement env) {
+		List<Wall> walls = new ArrayList<>();
+		for (int i = ConstantParams.getTorus() ? 0 : 1; i < (ConstantParams.getTorus() ? ConstantParams.getGridSizeX()
+				: ConstantParams.getGridSizeX() - 1); i++) {
+			for (int j = ConstantParams.getTorus() ? 0 : 1; j < (ConstantParams.getTorus()
+					? ConstantParams.getGridSizeY()
+					: ConstantParams.getGridSizeY() - 1); j++) {
+				Wall current = new Wall(i, j, env);
+				env.addNewAgent(current);
+				walls.add(current);
+			}
+		}
+		List<int[]> freeCell = new ArrayList<>();
+		Wall current = walls.remove(ConstantParams.getRandom().nextInt(walls.size()));
+		int[] currentCell = new int[] { current.getPosX(), current.getPosY() };
+		freeCell.add(new int[] { current.getPosX(), current.getPosY() });
+		List<int[]> movements = Arrays.asList(CommonAgentBehavour.enableMovement);
+		while (walls.size() > ConstantParams.getNumberOfWall()) {
+			env.updateDisplay();
+			if (ConstantParams.getRandom().nextInt(4) == 0) {
+				Collections.shuffle(movements, ConstantParams.getRandom());
+			}
+			int x = env.calculateTorus(currentCell[0] + movements.get(0)[0], ConstantParams.getGridSizeX());
+			int y = env.calculateTorus(currentCell[1] + movements.get(0)[1], ConstantParams.getGridSizeY());
+			if (!ConstantParams.getTorus() && (x <= 0 || y <= 0 || x >= ConstantParams.getGridSizeX() - 1
+					|| y >= ConstantParams.getGridSizeY() - 1)) {
+				continue;
+			}
+			if (!env.isEmptyCellule(x, y)) {
+				freeCell.add(new int[] { x, y });
+				walls.remove(env.getCell(x, y));
+				env.getEnvironnement()[x][y] = null;
+			}
+			currentCell = new int[] { x, y };
+		}
+		return freeCell;
+	}
+
+	public void initAgent(Environnement env, MainFrame mainFrame, int version) {
 		this.endOfGame = false;
 		this.mainFrame = mainFrame;
+		this.version = version;
 		this.initAgent(env);
 	}
 
