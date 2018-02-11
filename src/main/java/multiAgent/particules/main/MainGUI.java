@@ -25,7 +25,7 @@ public class MainGUI {
 		Thread.sleep(ConstantParams.getDelay());
 		int tick = 0;
 		while (true) {
-			if (ConstantParams.getNumberOfTicks() != 0 && tick < ConstantParams.getNumberOfTicks()) {
+			if (ConstantParams.getNumberOfTicks() != 0 && tick >= ConstantParams.getNumberOfTicks()) {
 				break;
 			}
 			sma.run();
