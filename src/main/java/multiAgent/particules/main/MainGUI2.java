@@ -35,6 +35,10 @@ public class MainGUI2 {
 			}
 			Thread.sleep(ConstantParams.getDelay());
 		}
+		if(ConstantParams.showTrace()) {
+			getOutputStream().flush();
+			getOutputStream().close();
+		}
 	}
 	
 	private static SMA initSMA() {
