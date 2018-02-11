@@ -26,6 +26,8 @@ public abstract class SMA implements SMAInterface {
 	protected ListIterator<Agent> it;
 	
 	private PrintWriter logfile;
+
+	protected int tick;
 	
 	public void initAgent(Environnement env) {
 		if (ConstantParams.getGridSizeX() * ConstantParams.getGridSizeY() < ConstantParams.getNumberInitialOfFishes()+ConstantParams.getNumberInitialOfSharks()) {
@@ -81,7 +83,7 @@ public abstract class SMA implements SMAInterface {
 		if(ConstantParams.showTrace()) {
 			try {
 				logfile = new PrintWriter(new FileWriter("log-wator.txt"));
-				logfile.println("Agent type;Starve time;Breed time;Agent color;Age;Positon X; Position Y");
+				logfile.println("Tick;Agent type;Starve time;Breed time;Agent color;Age;Positon X; Position Y");
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
@@ -108,7 +110,12 @@ public abstract class SMA implements SMAInterface {
 	@Override
 	public void log() {
 		for(Agent agent : agentList) {
-			logfile.println(agent.toString());
+			logfile.println(tick + ";" + agent.toString());
 		}
+	}
+
+	public void closeLogger(){
+		logfile.flush();
+		logfile.close();
 	}
 }

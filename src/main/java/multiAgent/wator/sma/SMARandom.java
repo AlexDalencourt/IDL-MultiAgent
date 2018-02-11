@@ -7,6 +7,7 @@ public class SMARandom extends SMA {
 	
 	@Override
 	public void run() {
+		tick++;
 		for(int i = 0; i < agentList.size(); i++) {
 			agentList.get(ConstantParams.getRandom().nextInt(agentList.size())).decide();
 		}

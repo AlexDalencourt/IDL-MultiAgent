@@ -8,6 +8,7 @@ public class SMASequentialRandom extends SMA{
 	
 	@Override
 	public void run() {
+		tick++;
 		Collections.shuffle(agentList, ConstantParams.getRandom());
 		it = agentList.listIterator();
 		while(it.hasNext()) {

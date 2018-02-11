@@ -23,7 +23,7 @@ public class MainGUI2 {
 		Thread.sleep(ConstantParams.getDelay());
 		int tickNumber = 0;
 		while (true) {
-			if (ConstantParams.getNumberOfTicks() != 0 && tickNumber < ConstantParams.getNumberOfTicks()) {
+			if (ConstantParams.getNumberOfTicks() != 0 && tickNumber >= ConstantParams.getNumberOfTicks()) {
 				break;
 			}
 			sma.run();
@@ -36,6 +36,9 @@ public class MainGUI2 {
 			}
 			Thread.sleep(ConstantParams.getDelay());
 			sma.addNewGeneration();
+		}
+		if(ConstantParams.showTrace()){
+			sma.closeLogger();
 		}
 	}
 
